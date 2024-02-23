@@ -2,7 +2,6 @@ import Link from "next/link"
 import MainButton from "../MainButton"
 import MainButtonOutline from "../MainButtonOutline"
 
-
 export default function Navbar() {
 
     const displayLeftSide = () => {
