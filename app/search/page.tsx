@@ -1,10 +1,32 @@
 "use client"
-import { useRouter } from 'next/navigation';
-import React from 'react'
+
+import { useEffect, useState } from "react";
+
+const URL_BASE = "http://localhost:8080/api/solutions"
 
 export default function Search({ searchParams }) {
-    const router = useRouter()
-    console.log("searchParams: ", searchParams);
+    const [solutions, setSolutions] = useState([])
+
+    useEffect(() => {
+        const url = URL_BASE + searchParams.url
+
+        try {
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("DATA: ", data);
+                    setSolutions(data)
+                })
+        } catch (error) {
+            console.log("ERROR: ", error);
+        }
+
+    }, [])
     
     return (
         <div>

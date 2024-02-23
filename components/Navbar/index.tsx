@@ -1,5 +1,6 @@
 import Link from "next/link"
 import MainButton from "../MainButton"
+import MainButtonOutline from "../MainButtonOutline"
 
 
 export default function Navbar() {
@@ -13,7 +14,12 @@ export default function Navbar() {
             )
         } else {
             return (
-                <MainButton text="Login" linkTo="/login" />
+                <div className="flex">
+                    <div className="mr-4">
+                        <MainButton text="Login" linkTo="/login"/>
+                    </div>
+                    <MainButtonOutline text="Register" linkTo="/register/customer" />
+                </div>
             )
         }
     }

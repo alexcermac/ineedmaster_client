@@ -2,6 +2,11 @@
 import Link from "next/link"
 import illustration from "../public/homepage_illustration.svg"
 import construction_icon from "../public/categories/construction_icon.png"
+import door_icon from "../public/categories/door_icon.png"
+import furniture_icon from "../public/categories/furniture_icon.png"
+import interior_designer_icon from "../public/categories/interior_designer_icon.png"
+import iron_gate_icon from "../public/categories/iron_gate_icon.png"
+import thermics_icon from "../public/categories/thermics_icon.png"
 import Image from "next/image"
 import SearchButton from "@/components/SearchButton"
 import { useEffect, useState } from "react"
@@ -181,8 +186,8 @@ export default function Home() {
 					</div>
 					<div className="flex flex-col items-center flex-1 text-center hover:cursor-pointer">
 						<Image
-							className="bg-violet-200 p-4 rounded-3xl mb-4"
-							src={construction_icon}
+							className="bg-green-200 p-3 rounded-3xl mb-4"
+							src={door_icon}
 							width={80}
 							height={80}
 							alt="Construction icon"
@@ -191,8 +196,8 @@ export default function Home() {
 					</div>
 					<div className="flex flex-col items-center flex-1 text-center hover:cursor-pointer">
 						<Image
-							className="bg-violet-200 p-4 rounded-3xl mb-4"
-							src={construction_icon}
+							className="bg-yellow-200 p-4 rounded-3xl mb-4"
+							src={furniture_icon}
 							width={80}
 							height={80}
 							alt="Construction icon"
@@ -201,8 +206,8 @@ export default function Home() {
 					</div>
 					<div className="flex flex-col items-center flex-1 text-center hover:cursor-pointer">
 						<Image
-							className="bg-violet-200 p-4 rounded-3xl mb-4"
-							src={construction_icon}
+							className="bg-fuchsia-200 p-4 rounded-3xl mb-4"
+							src={interior_designer_icon}
 							width={80}
 							height={80}
 							alt="Construction icon"
@@ -211,8 +216,8 @@ export default function Home() {
 					</div>
 					<div className="flex flex-col items-center flex-1 text-center hover:cursor-pointer">
 						<Image
-							className="bg-violet-200 p-4 rounded-3xl mb-4"
-							src={construction_icon}
+							className="bg-blue-200 p-4 rounded-3xl mb-4"
+							src={iron_gate_icon}
 							width={80}
 							height={80}
 							alt="Construction icon"
@@ -221,8 +226,8 @@ export default function Home() {
 					</div>
 					<div className="flex flex-col items-center flex-1 text-center hover:cursor-pointer">
 						<Image
-							className="bg-violet-200 p-4 rounded-3xl mb-4"
-							src={construction_icon}
+							className="bg-rose-200 p-4 rounded-3xl mb-4"
+							src={thermics_icon}
 							width={80}
 							height={80}
 							alt="Construction icon"
