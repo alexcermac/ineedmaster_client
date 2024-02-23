@@ -1,8 +1,9 @@
 'use client'
-
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 export default function Login() {
+    const router = useRouter()
     const [formError, setFormError] = useState("")
 
     const handleSubmit = (event: any) => {
@@ -22,6 +23,8 @@ export default function Login() {
                 .then(data => {
                     localStorage.setItem("token", data.token)
                 })
+            
+            router.push("/profile")
         } catch (error:any) {
             setFormError(error)
         }

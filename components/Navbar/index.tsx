@@ -19,7 +19,7 @@ export default function Navbar() {
     }
 
     return (
-        <div className="mx-auto flex justify-between items-center lg:max-w-6xl">
+        <div className="mx-auto py-2 flex justify-between items-center lg:max-w-6xl">
             <Link href="/">iNeedMaster</Link>
             {displayLeftSide()}
         </div>

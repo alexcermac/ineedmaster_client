@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "iNeedMaster",
-  description: "Connecting problems and solutions in seconds",
+  description: "Connecting problems to solutions in seconds",
 };
 
 export default function RootLayout({
@@ -20,6 +20,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Navbar />
         {children}
+        {/* TODO: Footer */}
       </body>
     </html>
   );
