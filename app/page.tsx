@@ -41,65 +41,65 @@ export default function Home() {
 			<div className="mx-auto max-w-6xl mb-14">
 				<p className="font-bold text-2xl mb-12">Categorii principale</p>
 				<div className="flex justify-between">
-					<div className="flex flex-col items-center flex-1 text-center hover:cursor-pointer">
+					<div className="flex flex-col items-center flex-1 text-center">
 						<Image
-							className="bg-violet-200 p-4 rounded-3xl mb-4"
+							className="bg-violet-200 p-4 rounded-3xl mb-4 hover:cursor-pointer"
 							src={construction_icon}
 							width={80}
 							height={80}
 							alt="Construction icon"
 						/>
-						<p>Meseriasi</p>
+						<p className="hover:cursor-pointer hover:underline">Meseriasi</p>
 					</div>
-					<div className="flex flex-col items-center flex-1 text-center hover:cursor-pointer">
+					<div className="flex flex-col items-center flex-1 text-center">
 						<Image
-							className="bg-green-200 p-3 rounded-3xl mb-4"
+							className="bg-green-200 p-3 rounded-3xl mb-4 hover:cursor-pointer"
 							src={door_icon}
 							width={80}
 							height={80}
 							alt="Construction icon"
 						/>
-						<p>Ferestre si usi</p>
+						<p className="hover:cursor-pointer hover:underline">Ferestre si usi</p>
 					</div>
-					<div className="flex flex-col items-center flex-1 text-center hover:cursor-pointer">
+					<div className="flex flex-col items-center flex-1 text-center">
 						<Image
-							className="bg-yellow-200 p-4 rounded-3xl mb-4"
+							className="bg-yellow-200 p-4 rounded-3xl mb-4 hover:cursor-pointer"
 							src={furniture_icon}
 							width={80}
 							height={80}
 							alt="Construction icon"
 						/>
-						<p>Mobilier</p>
+						<p className="hover:cursor-pointer hover:underline">Mobilier</p>
 					</div>
-					<div className="flex flex-col items-center flex-1 text-center hover:cursor-pointer">
+					<div className="flex flex-col items-center flex-1 text-center">
 						<Image
-							className="bg-fuchsia-200 p-4 rounded-3xl mb-4"
+							className="bg-fuchsia-200 p-4 rounded-3xl mb-4 hover:cursor-pointer"
 							src={interior_designer_icon}
 							width={80}
 							height={80}
 							alt="Construction icon"
 						/>
-						<p>Amenajari interioare</p>
+						<p className="hover:cursor-pointer hover:underline">Amenajari interioare</p>
 					</div>
-					<div className="flex flex-col items-center flex-1 text-center hover:cursor-pointer">
+					<div className="flex flex-col items-center flex-1 text-center">
 						<Image
-							className="bg-blue-200 p-4 rounded-3xl mb-4"
+							className="bg-blue-200 p-4 rounded-3xl mb-4 hover:cursor-pointer"
 							src={iron_gate_icon}
 							width={80}
 							height={80}
 							alt="Construction icon"
 						/>
-						<p>Feronerie</p>
+						<p className="hover:cursor-pointer hover:underline">Feronerie</p>
 					</div>
-					<div className="flex flex-col items-center flex-1 text-center hover:cursor-pointer">
+					<div className="flex flex-col items-center flex-1 text-center">
 						<Image
-							className="bg-rose-200 p-4 rounded-3xl mb-4"
+							className="bg-rose-200 p-4 rounded-3xl mb-4 hover:cursor-pointer"
 							src={thermics_icon}
 							width={80}
 							height={80}
 							alt="Construction icon"
 						/>
-						<p>Instalatii termice - aer conditionat</p>
+						<p className="hover:cursor-pointer hover:underline">Instalatii termice - aer conditionat</p>
 					</div>
 				</div>
 			</div>
