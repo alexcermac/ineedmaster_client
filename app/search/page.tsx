@@ -1,5 +1,4 @@
 "use client"
-
 import { useEffect, useState } from "react";
 import { Solution } from '@/app/common/types'
 import Card from "./components/Card";

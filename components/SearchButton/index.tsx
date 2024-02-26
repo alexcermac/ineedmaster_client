@@ -1,7 +1,6 @@
 import React from 'react'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import { useRouter } from "next/navigation"
-import Link from 'next/link'
 
 interface Props {
     countyId: number,

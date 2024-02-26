@@ -16,3 +16,12 @@ export interface Solution {
     startHour: string,
     endHour: string
 }
+
+export interface User {
+    email: string,
+    firstName: string,
+    lastName: string,
+    birthDate: string,
+    phone: string,
+    role: string
+}
