@@ -6,7 +6,10 @@ export default function SearchFilter() {
     const [countyList, setCountyList] = useState([])
 	const [cityList, setCityList] = useState([])
 	const [categoryList, setCategoryList] = useState([])
-	const [subcategoryList, setSubcategoryList] = useState([])	
+	const [subcategoryList, setSubcategoryList] = useState([])
+
+	const [countyFetchError, setCountyFetchError] = useState(false)
+	const [categoryFetchError, setCategoryFetchError] = useState(false)
 
     const [countyId, setCountyId] = useState(-1)
 	const [cityId, setCityId] = useState(-1)
@@ -15,31 +18,62 @@ export default function SearchFilter() {
 
     useEffect(() => {
         // TODO: set properties if they exist in the URL
-
-		fetch("http://localhost:8080/api/counties", {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		})
-			.then(response => response.json())
-			.then(data => {
-				setCountyList(data)
-			})
-
-		fetch("http://localhost:8080/api/categories", {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		})
-			.then(response => response.json())
-			.then(data => {
-				setCategoryList(data)
-			})
+		fetchCountyList()
+		fetchCategoryList()
 	}, [])
 
+	const fetchCountyList = async () => {
+		try {
+			const response = await fetch("http://localhost:8080/api/counties", {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			})
+				.then(response => {
+					if(response.status === 200) {
+						return response.json()
+					}
+					throw new Error('Something went wrong')
+				})
+				.then(data => {
+					setCountyList(data)
+					return data
+				})
+		} catch (error) {
+			setCountyFetchError(true)
+		}
+	}
+
+	const fetchCategoryList = async () => {
+		try {
+			const response = await fetch("http://localhost:8080/api/categories", {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			})
+				.then(response => {
+					if(response.status === 200) {
+						return response.json()
+					}
+					throw new Error('Something went wrong')
+				})
+				.then(data => {
+					setCategoryList(data)
+					return data
+				})
+		} catch (error) {
+			setCategoryFetchError(true)
+		}
+	}
+
+
     const displayCountyList = () => {
+		if(countyFetchError) {
+			return <option>Failed to fetch data</option>
+		}
+
 		return countyList.map((county: { id: number, name: string }, index) => {
 			return (
 				<option key={index} value={county.id}>{county.name}</option>
@@ -48,6 +82,10 @@ export default function SearchFilter() {
 	}
 
 	const displayCityList = () => {
+		if(countyFetchError) {
+			return <option>Failed to fetch data</option>
+		}
+
 		if(countyId != -1) {
 			// We are using the countyId as the index in the array, so we need to subtract 1
 			return countyList[countyId - 1].cities.map((city, index) => {
@@ -61,6 +99,10 @@ export default function SearchFilter() {
 	}
 
 	const displayCategoryList = () => {
+		if(categoryFetchError) {
+			return <option>Failed to fetch data</option>
+		}
+
 		return categoryList.map((category: { id: number, name: string }, index) => {
 			return (
 				<option key={index} value={category.id}>{category.name}</option>
@@ -69,6 +111,10 @@ export default function SearchFilter() {
 	}
 
 	const displaySubcategoryList = () => {
+		if(categoryFetchError) {
+			return <option>Failed to fetch data</option>
+		}
+
 		if(categoryId != -1) {
 			// We are using the categoryId as the index in the array, so we need to subtract 1
 			return categoryList[categoryId - 1].subcategories.map((subcategory, index) => {
@@ -87,7 +133,7 @@ export default function SearchFilter() {
 						<label className="block mb-2 text-sm font-medium text-gray-900">County</label>
 						<select
 							className="bg-gray-50 border-2 text-gray-900 text-sm rounded-lg focus:border-amber-300 block w-full p-2.5 dark:placeholder-gray-400  dark:focus:ring-amber-300 dark:focus:border-amber-300 dark:focus:outline-4"
-							// value={county}
+							value={countyId}
 							onChange={(event) => setCountyId(event.target.value)}
 						>
 							<option value={-1} selected>Choose a county</option>

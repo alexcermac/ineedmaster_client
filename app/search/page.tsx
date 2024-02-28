@@ -21,11 +21,9 @@ export default function Search({ searchParams }) {
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log("DATA: ", data);
                     setSolutions(data)
                 })
         } catch (error) {
-            console.log("ERROR: ", error);
         }
 
     }, [searchParams])

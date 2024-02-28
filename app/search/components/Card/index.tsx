@@ -17,7 +17,7 @@ export default function Card({ solution }: { solution: Solution }, index: number
                 width={120}
                 height={120}
             />
-            <Link href={`/solutions/${solution.id}`} className="font-semibold text-lg hover:underline">{solution.title}</Link>
+            <Link href={`/solution/${solution.id}`} className="font-semibold text-lg hover:underline">{solution.title}</Link>
             <p className="font-normal text-gray-600 text-md">{solution.description}</p>
             <p className="font-normal text-gray-400 text-sm mt-4">Category: {solution.categoryName}</p>
             <p className="font-normal text-gray-400 text-sm mb-6">Subcategory: {solution.subcategoryName}</p>
@@ -25,7 +25,7 @@ export default function Card({ solution }: { solution: Solution }, index: number
                 {solution.type === "COST"
                 ? <p className="text-right">Price: {solution.price} euros</p>
                 : <p className="text-right">Inspection</p>}
-                <MainButton text="Details" linkTo={`/solutions/${solution.id}`} />
+                <MainButton text="Details" linkTo={`/solution/${solution.id}`} />
             </div>
         </div>
     )

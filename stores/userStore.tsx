@@ -1,8 +1,8 @@
 import { create } from 'zustand'
 
-export const useUserStore = create((set) => ({
+export const useUserStore = create((set, get) => ({
     user: null,
-    userError: null,
+    userError: "",
     userLoading: false,
     userLogoutLoading: false,
     getUser: async () => {
@@ -17,21 +17,13 @@ export const useUserStore = create((set) => ({
                     'Authorization': `Bearer ${token}`
                 },
             })
-                .then(response => {
-                    console.log("response: ", response);
-                    
-                    return response.json()
-                })
+                .then(response => response.json())
                 .then(data => {
                     return data
                 })
-            
 
-            set({ user: response })
+            set({ user: response, userError: "" })
         } catch (error) {
-            console.log("error: ", typeof(error));
-            console.log("error: ", error);
-            
             set({ userError: error })
         }
         

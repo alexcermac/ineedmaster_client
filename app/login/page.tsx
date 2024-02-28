@@ -2,9 +2,11 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Modal from "@/components/Modal"
+import { useUserStore } from "@/stores/userStore"
 
 export default function Login() {
     const router = useRouter()
+    const [user, getUser] = useUserStore(state => [state.user, state.getUser])
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -12,7 +14,7 @@ export default function Login() {
 
     const handleSubmit = async (event: any) => {
         event.preventDefault()
-        
+
         try {
             const response = await fetch('http://localhost:8080/api/auth/authenticate', {
                 method: 'POST',
@@ -29,6 +31,7 @@ export default function Login() {
                 })
                 .then(data => {
                     localStorage.setItem("token", data.token)
+                    getUser()
                     router.push("/profile")
                 })
         } catch (error:any) {

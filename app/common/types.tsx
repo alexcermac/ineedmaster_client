@@ -25,3 +25,22 @@ export interface User {
     phone: string,
     role: string
 }
+
+export interface Task {
+    id: number,
+    masterId: number,
+    masterFirstName: string,
+
+    solutionCategoryName: string,
+    solutionSubcategoryName: string,
+    solutionTitle: string,
+    solutionDescription: string,
+    solutionType: string,
+    solutionPrice: number,
+
+    date: string,
+    startHour: string,
+    endHour: string,
+    status: string,
+    address: string
+}
