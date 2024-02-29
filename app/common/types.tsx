@@ -1,6 +1,7 @@
 export interface Solution {
     id: number,
     userId: number,
+    userFirstName: string,
     categoryId: number,
     categoryName: string,
     subcategoryId: number,
