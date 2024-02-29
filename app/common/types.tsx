@@ -39,7 +39,7 @@ export interface Task {
     solutionType: string,
     solutionPrice: number,
 
-    date: string,
+    date: Date,
     startHour: string,
     endHour: string,
     status: string,

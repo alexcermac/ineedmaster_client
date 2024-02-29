@@ -1,10 +1,15 @@
 import { Task } from '@/app/common/types'
-import MainButton from '@/components/MainButton'
+import ButtonErrorOutline from '@/components/ButtonErrorOutline';
+import ButtonSuccess from '@/components/ButtonSuccess';
 
-export default function TaskCard({ task, typeOfTaskByDate }: { task: Task, typeOfTaskByDate: string }) {
+export default function TaskCardForMaster({ task, typeOfTaskByDate }: { task: Task, typeOfTaskByDate: string }) {
     // Convert stored Date string to Date object
     task.date = new Date(task.date);
      
+    const handleAcceptTask = () => {
+        console.log("Task accepted")
+    }
+
     const handleCancelTask = () => {
         console.log("Cancel task")
     }
@@ -15,10 +20,6 @@ export default function TaskCard({ task, typeOfTaskByDate }: { task: Task, typeO
             className="border-2 rounded-xl p-4 flex flex-col justify-between hover:bg-gray-100 hover:shadow-md transition duration-250 ease-in-out"
         >
             <div>
-                <div className="flex items-center justify-end mb-6">
-                    {/* <p className="mr-4">Status:</p> */}
-                    <p className={`text-center font-semibold py-1 px-2 rounded-lg ${task.status === "PENDING" && "text-orange-400 bg-orange-100"} ${task.status === "ACCEPTED" && "text-green-400 bg-green-100"}`}>{task.status.toLowerCase()}</p>
-                </div>
                 <div className="flex justify-center mb-6">
                     <div className="mr-4 pr-4 border-r-2 flex flex-col items-center">
                         <p className="font-medium">Date:</p>
@@ -32,19 +33,20 @@ export default function TaskCard({ task, typeOfTaskByDate }: { task: Task, typeO
                 </div>
 
                 <div className="mb-6">
-                    <p className="font-semibold text-md">Service details:</p>
+                    <p className="font-semibold text-md">Detalii serviciu:</p>
                     <p className="font-medium text-sm">{task.solutionTitle}</p>
                     <p className="text-sm">{task.solutionDescription}</p>
                     <p className="text-sm">{task.masterFirstName}</p>
                 </div>
 
-                <p className="text-sm"> Category: <span className="font-semibold text-gray-500 hover:cursor-pointer hover:underline">{task.solutionCategoryName}</span></p>
-                <p className="text-sm"> Subcategory: <span className="font-semibold text-gray-500 hover:cursor-pointer hover:underline">{task.solutionSubcategoryName}</span></p>
-                <p className="text-sm">Type: {task.solutionType === "PRICE" ? "Price: " + task.solutionPrice + " euros" : "Verification"}</p>
+                <p className="font-semibold text-sm text-gray-400 hover:cursor-pointer hover:underline">{task.categoryName}</p>
+                <p className="font-semibold text-sm text-gray-400 hover:cursor-pointer hover:underline">{task.subcategoryName}</p>
+                <p>{task.solutionType === "PRICE" ? "Price: " + task.solutionPrice + " euros" : "Verification"}</p>
             </div>
 
-            {typeOfTaskByDate === "future" && <div className="flex justify-center mt-6">
-                <MainButton text="Cancel task" handleOnClick={handleCancelTask} />
+            {typeOfTaskByDate === "future" && <div className="flex justify-between mt-6">
+                <ButtonSuccess text="Accept task" handleOnClick={handleAcceptTask} />
+                <ButtonErrorOutline text="Cancel task" handleOnClick={handleCancelTask} />
             </div>}
         </div>
     )

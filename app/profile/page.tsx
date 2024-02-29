@@ -21,8 +21,6 @@ export default function Profile() {
 
     useEffect(() => {
         if (userError) {
-            console.log("userError: ", userError);
-            
             setDisplayModal(true)
         }
     }, [userError])
@@ -50,10 +48,9 @@ export default function Profile() {
     }
 
     if(!user) {
-        router.push("/login")
         return (
             <div>
-                <p>User not found...</p>
+                <p>Loading user informations...</p>
             </div>
         )
     }
