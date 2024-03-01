@@ -13,22 +13,24 @@ export default function SearchButton({ countyId, cityId, categoryId, subcategory
     const router = useRouter()
 
     const handleClick = () => {
-        let url = ""
+        let urlParams = ""
         
         if(countyId != -1) {
-            url += `/county/${countyId}`
+            // urlParams += `/county/${countyId}`
+            urlParams += `county=${countyId}`
         } 
         if (cityId != -1) {
-            url += `/city/${cityId}`
+            urlParams += `&city=${cityId}`
         } 
         if (categoryId != -1) {
-            url += `/category/${categoryId}`
+            urlParams += `&category=${categoryId}`
         } 
         if (subcategoryId != -1) {    
-            url += `/subcategory/${subcategoryId}`
+            urlParams += `&subcategory=${subcategoryId}`
         }
 
-        router.push(`/search?url=${url}`)
+        // router.push(`/search?urlParams=${urlParams}`)
+        router.push(`/search?${urlParams}`)
     }
 
     return (

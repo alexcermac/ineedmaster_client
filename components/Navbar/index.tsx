@@ -13,10 +13,6 @@ export default function Navbar() {
         getUser()
     }, []);
 
-    useEffect(() => {
-        console.log("user: ", user);
-    }, [user])
-
     const displayLeftSide = () => {
         if(user) {
             return (

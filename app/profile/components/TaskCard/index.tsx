@@ -16,7 +16,6 @@ export default function TaskCard({ task, typeOfTaskByDate }: { task: Task, typeO
         >
             <div>
                 <div className="flex items-center justify-end mb-6">
-                    {/* <p className="mr-4">Status:</p> */}
                     <p className={`text-center font-semibold py-1 px-2 rounded-lg ${task.status === "PENDING" && "text-orange-400 bg-orange-100"} ${task.status === "ACCEPTED" && "text-green-400 bg-green-100"}`}>{task.status.toLowerCase()}</p>
                 </div>
                 <div className="flex justify-center mb-6">
@@ -38,9 +37,9 @@ export default function TaskCard({ task, typeOfTaskByDate }: { task: Task, typeO
                     <p className="text-sm">{task.masterFirstName}</p>
                 </div>
 
-                <p className="text-sm"> Category: <span className="font-semibold text-gray-500 hover:cursor-pointer hover:underline">{task.solutionCategoryName}</span></p>
-                <p className="text-sm"> Subcategory: <span className="font-semibold text-gray-500 hover:cursor-pointer hover:underline">{task.solutionSubcategoryName}</span></p>
-                <p className="text-sm">Type: {task.solutionType === "PRICE" ? "Price: " + task.solutionPrice + " euros" : "Verification"}</p>
+                <p className="text-sm"> Category: <span className="font-semibold text-gray-500">{task.solutionCategoryName}</span></p>
+                <p className="text-sm"> Subcategory: <span className="font-semibold text-gray-500">{task.solutionSubcategoryName}</span></p>
+                <p className="text-sm">Type: <span className="font-semibold text-gray-500">{task.solutionType === "PRICE" ? "Price: " + task.solutionPrice + " euros" : "Verification"}</span></p>
             </div>
 
             {typeOfTaskByDate === "future" && <div className="flex justify-center mt-6">

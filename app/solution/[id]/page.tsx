@@ -5,12 +5,14 @@ import MainButtonOutline from '@/components/MainButtonOutline'
 import Modal from '@/components/Modal'
 import NotFound from '@/components/NotFound'
 import { useUserStore } from '@/stores/userStore'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import DatePicker from "react-datepicker"
 
 import "react-datepicker/dist/react-datepicker.css"
 
 export default function SolutionById({ params: { id } }) {
+    const router = useRouter()
     const [user] = useUserStore(state => [state.user])
 
     const [solution, setSolution] = useState<Solution | null>(null)
@@ -20,6 +22,7 @@ export default function SolutionById({ params: { id } }) {
     const [endHour, setEndHour] = useState(new Date())
     const [address, setAddress] = useState("")
 
+    const [submitLoading, setSubmitLoading] = useState(false)
     const [errorDateBookingMessage, setErrorDateBookingMessage] = useState("")
 
     useEffect(() => {
@@ -79,13 +82,15 @@ export default function SolutionById({ params: { id } }) {
             return
         }
 
+        setSubmitLoading(true)
+
         const newTask = {
             customerId: user.id,
             masterId: solution?.userId,
             solutionId: solution?.id,
             date: dateOfTask,
-            startHour: startHour.getHours() + ":" + startHour.getMinutes(),
-            endHour: endHour.getHours() + ":" + endHour.getMinutes(),
+            startHour: startHour.getHours() + ":" + (startHour.getMinutes() === 0 ? "00" : startHour.getMinutes()), // If minutes are 0, add 00 to the end of the string
+            endHour: endHour.getHours() + ":" + (endHour.getMinutes() === 0 ? "00" : endHour.getMinutes()),
             status: "PENDING",
             address: address
         }
@@ -104,7 +109,10 @@ export default function SolutionById({ params: { id } }) {
             setDataFetchError(data.message)
         } else {
             const data = await response.json()
+            router.push(`/profile`)
         }
+
+        setSubmitLoading(false)
     }
 
     if(dataFetchError) {
@@ -181,7 +189,7 @@ export default function SolutionById({ params: { id } }) {
                         />
                     </div>
                     <div className="flex justify-center">
-                        <MainButton text="Book" handleOnClick={handleSubmitButton} />
+                        <MainButton text="Book" handleOnClick={handleSubmitButton} submitLoading={submitLoading} />
                     </div>
                 </div>
             </div>

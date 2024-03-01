@@ -9,8 +9,14 @@ import iron_gate_icon from "../public/categories/iron_gate_icon.png"
 import thermics_icon from "../public/categories/thermics_icon.png"
 import Image from "next/image"
 import SearchFilter from "@/components/SearchFilter"
+import { useState } from "react"
 
 export default function Home() {
+	const [countyId, setCountyId] = useState(-1)
+	const [cityId, setCityId] = useState(-1)
+	const [categoryId, setCategoryId] = useState(-1)
+	const [subcategoryId, setSubcategoryId] = useState(-1)
+
 	return (
 		<div className="">
 			<div className="mx-auto max-w-6xl flex justify-between items-center text-center lg:flex-auto lg:py-24 lg:text-left">
@@ -36,7 +42,7 @@ export default function Home() {
 				</div>
 			</div>
 			<div className="mb-14 py-12 bg-gray-200">
-				<SearchFilter />
+				<SearchFilter countyIdProp={countyId} cityIdProp={cityId} categoryIdProp={categoryId} subcategoryIdProp={subcategoryId} />
 			</div>
 			<div className="mx-auto max-w-6xl mb-14">
 				<p className="font-bold text-2xl mb-12">Categorii principale</p>

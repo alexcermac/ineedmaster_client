@@ -35,8 +35,6 @@ export default function Login() {
                     router.push("/profile")
                 })
         } catch (error:any) {
-            console.log("error: ", error);
-            
             setFormError(error.message)
         }
     }
