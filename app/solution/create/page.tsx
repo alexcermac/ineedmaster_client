@@ -1,0 +1,327 @@
+"use client"
+import create_solution_illustration from '@/public/create_solution_illustration.svg'
+import Image from 'next/image'
+import MainButton from '@/components/MainButton'
+import DatePicker from "react-datepicker"
+import { useEffect, useState } from 'react'
+
+import "react-datepicker/dist/react-datepicker.css"
+import Modal from '@/components/Modal'
+import { useUserStore } from '@/stores/userStore'
+
+export default function CreateSolution() {
+    const [user] = useUserStore(state => [state.user])
+
+    const [title, setTitle] = useState("")
+    const [description, setDescription] = useState("")
+    const [type, setType] = useState("COST")
+    const [startHour, setStartHour] = useState(new Date())
+    const [endHour, setEndHour] = useState(new Date())
+    const [countyList, setCountyList] = useState([])
+    const [countyFetchError, setCountyFetchError] = useState(false)
+    const [cityList, setCityList] = useState([])
+    const [categoryList, setCategoryList] = useState([])
+    const [categoryFetchError, setCategoryFetchError] = useState(false)
+    const [subcategoryList, setSubcategoryList] = useState([])
+
+    const [countyId, setCountyId] = useState(-1)
+	const [cityId, setCityId] = useState( -1)
+	const [categoryId, setCategoryId] = useState(-1)
+	const [subcategoryId, setSubcategoryId] = useState(-1)
+
+    const [submitErrorMessage, setSubmitErrorMessage] = useState("")
+
+    useEffect(() => {
+        fetchCountyList()
+        fetchCategoryList()
+    }, [])
+
+    const fetchCountyList = async () => {
+		try {
+			const response = await fetch("http://localhost:8080/api/counties", {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			})
+				.then(response => {
+					if(response.status === 200) {
+						return response.json()
+					}
+					throw new Error('Something went wrong')
+				})
+				.then(data => {
+					setCountyList(data)
+					return data
+				})
+		} catch (error) {
+			setCountyFetchError(true)
+		}
+	}
+
+	const fetchCategoryList = async () => {
+		try {
+			const response = await fetch("http://localhost:8080/api/categories", {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			})
+				.then(response => {
+					if(response.status === 200) {
+						return response.json()
+					}
+					throw new Error('Something went wrong')
+				})
+				.then(data => {
+					setCategoryList(data)
+					return data
+				})
+		} catch (error) {
+			setCategoryFetchError(true)
+		}
+	}
+
+    const displayCountyList = () => {
+		if(countyFetchError) {
+			return <option>Failed to fetch data</option>
+		}
+
+		return countyList.map((county: { id: number, name: string }, index) => {
+			return (
+				<option key={index} value={county.id}>{county.name}</option>
+			)
+		})
+	}
+
+	const displayCityList = () => {
+		if(countyFetchError) {
+			return <option>Failed to fetch data</option>
+		}
+
+		if(countyList.length === 0) {
+			return <option>Loading</option>
+		}
+
+		if(countyId != -1) {
+			// We are using the countyId as the index in the array, so we need to subtract 1
+			return countyList[countyId - 1].cities.map((city, index) => {
+				return (
+					<option key={index} value={city.id}>{city.name}</option>
+				)
+			})
+		} else {
+			return null
+		}
+	}
+
+	const displayCategoryList = () => {
+		if(categoryFetchError) {
+			return <option>Failed to fetch data</option>
+		}
+
+		return categoryList.map((category: { id: number, name: string }, index) => {
+			return (
+				<option key={index} value={category.id}>{category.name}</option>
+			)
+		})
+	}
+
+	const displaySubcategoryList = () => {
+		if(categoryFetchError) {
+			return <option>Failed to fetch data</option>
+		}
+
+		if(categoryList.length === 0) {
+			return <option>Loading</option>
+		}
+
+		if(categoryId != -1) {
+			// We are using the categoryId as the index in the array, so we need to subtract 1
+			return categoryList[categoryId - 1].subcategories.map((subcategory, index) => {
+				return (
+					<option key={index} value={subcategory.id}>{subcategory.name}</option>
+				)
+			})
+		} else {
+			return null
+		}
+	}
+
+    const handleSubmit = async () => {
+        const newSolution = {
+            userId: user.id,
+            title: title,
+            description: description,
+            type: type,
+            price: 0,
+            countyId: countyId,
+            cityId: cityId,
+            categoryId: categoryId,
+            subcategoryId: subcategoryId,
+            startHour: startHour.getHours() + ":" + (startHour.getMinutes() === 0 ? "00" : startHour.getMinutes()), // If minutes are 0, add 00 to the end of the string,
+            endHour: endHour.getHours() + ":" + (endHour.getMinutes() === 0 ? "00" : endHour.getMinutes())
+        }
+
+        console.log("New solution: ", newSolution);
+
+        if(countyId === -1) {
+            setSubmitErrorMessage("Please select a county.")
+            return
+        }
+        if(cityId === -1) {
+            setSubmitErrorMessage("Please select a city.")
+            return
+        }
+        if(categoryId === -1) {
+            setSubmitErrorMessage("Please select a category.")
+            return
+        }
+        if(subcategoryId === -1) {
+            setSubmitErrorMessage("Please select a subcategory.")
+            return
+        }
+        
+
+        const response = await fetch(`http://localhost:8080/api/solutions`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            body: JSON.stringify(newSolution)
+        })
+
+        if(response.ok) {
+            console.log("Solution created successfully")
+        } else {
+            console.log("Failed to create solution")
+        }
+    }
+
+    return (
+        <div>
+            {submitErrorMessage && <Modal message={submitErrorMessage} handleModalClose={() => setSubmitErrorMessage("")} />}
+            <div className="mx-auto max-w-6xl mt-6">
+                <div className="flex justify-between">
+                    <div className="flex-grow">
+                        <h1 className="font-semibold text-2xl mb-6">Create a new solution</h1>
+                        <div className="flex flex-col mb-6">
+                            <label className="font-medium text-md">Title</label>
+                            <input type="text" className="border-2 rounded-xl py-1 px-4 hover:bg-gray-50 hover:shadow-sm transition duration-100 ease-in-out" value={title} onChange={(event) => setTitle(event.target.value)}/>
+                        </div>
+                        <div className="flex flex-col mb-10">
+                            <label className="font-medium text-md">Description</label>
+                            <textarea type="text" className="border-2 rounded-xl py-1 px-4 hover:bg-gray-50 hover:shadow-sm transition duration-100 ease-in-out" vlaue={description} onChange={(event) => setDescription(event.target.value)}/>
+                        </div>
+                        <div className="flex justify-center mb-10">
+                            <div className="border-r-2 pr-10 mr-10 start flex-1">
+                                <div className="flex flex-col mb-4">
+                                    <label className="font-medium text-md">Type</label>
+                                    <select
+                                        type="text"
+                                        className="border-2 rounded-xl py-1 px-4 w-40 max-w-40 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
+                                        value={type}
+                                        onChange={(event) => setType(event.target.value)}
+                                    >
+                                        <option value="COST">Cost</option>
+                                        <option value="CHECK">Verification</option>
+                                    </select>
+                                    {/* If type is COST, display price input */ }
+                                </div>
+                                <div className="mb-4">
+                                    <p className="font-medium text-md">Start hour</p>
+                                    <DatePicker
+                                        className="border-2 rounded-xl py-1 px-4 w-40 max-w-40 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
+                                        selected={startHour}
+                                        onChange={(date) => setStartHour(date)}
+                                        showTimeSelect
+                                        showTimeSelectOnly
+                                        timeIntervals={15}
+                                        timeCaption="Time"
+                                        dateFormat="h:mm aa"
+                                    />
+                                </div>
+                                <div>
+                                    <p className="font-medium text-md">End hour</p>
+                                    <DatePicker
+                                        className="border-2 rounded-xl py-1 px-4 w-40 max-w-40 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
+                                        selected={endHour}
+                                        onChange={(date) => setEndHour(date)}
+                                        showTimeSelect
+                                        showTimeSelectOnly
+                                        timeIntervals={15}
+                                        timeCaption="Time"
+                                        dateFormat="h:mm aa"
+                                    />
+                                </div>
+                            </div>
+                            <div className="flex-1">
+                                <div className="flex flex-col mb-4">
+                                    <label className="font-medium text-md">County</label>
+                                    <select
+                                        type="text"
+                                        className="border-2 rounded-xl py-1 px-4 w-60 max-w-60 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
+                                        value={countyId}
+                                        onChange={(event) => {
+                                            setCountyId(event.target.value)
+                                            setCityId(-1)
+                                        }}
+                                    >
+                                        <option value={-1} selected>Choose a county</option>
+                                        {countyList && displayCountyList()}
+                                    </select>
+                                </div>
+                                <div className="flex flex-col mb-4">
+                                    <label className="font-medium text-md">City</label>
+                                    <select
+                                        type="text"
+                                        className="border-2 rounded-xl py-1 px-4 w-60 max-w-60 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
+                                        value={cityId}
+                                        onChange={(event) => setCityId(event.target.value)}
+                                    >
+                                        <option value={-1} selected>Choose a city</option>
+                                        {(countyList.length > 0) && displayCityList()}
+                                    </select>
+                                </div>
+                                <div className="flex flex-col mb-4">
+                                    <label className="font-medium text-md">Category</label>
+                                    <select
+                                        type="text" 
+                                        className="border-2 rounded-xl py-1 px-4 w-60 max-w-60 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
+                                        value={categoryId}
+                                        onChange={(event) => {
+                                            setCategoryId(event.target.value)
+                                            setSubcategoryId(-1)
+                                        }}
+                                    >
+                                        <option value={-1} selected>Choose a category</option>
+                                        {categoryList && displayCategoryList()}
+                                    </select>
+                                </div>
+                                <div className="flex flex-col mb-4">
+                                    <label className="font-medium text-md">Subcategory</label>
+                                    <select
+                                        type="text"
+                                        className="border-2 rounded-xl py-1 px-4 w-60 max-w-60 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
+                                        value={subcategoryId}
+                                        onChange={(event) => setSubcategoryId(event.target.value)}
+                                    >
+                                        <option value={-1} selected>Choose a subcategory</option>
+                                        {(categoryList.length > 0) && displaySubcategoryList()}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex justify-center ">
+                            <MainButton text="Create solution" handleOnClick={handleSubmit} />
+                        </div>
+                    </div>
+                    <div className="flex-4">
+                        <Image src={create_solution_illustration} alt="Create solution illustration" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}

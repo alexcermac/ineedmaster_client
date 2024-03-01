@@ -32,6 +32,7 @@ export interface Task {
     masterId: number,
     masterFirstName: string,
 
+    solutionId: string,
     solutionCategoryName: string,
     solutionSubcategoryName: string,
     solutionTitle: string,

@@ -131,14 +131,18 @@ export default function SolutionById({ params: { id } }) {
         <div>
             {errorDateBookingMessage && <Modal message={errorDateBookingMessage} handleModalClose={() => setErrorDateBookingMessage("")} />}
             <div className="mx-auto max-w-6xl flex justify-between mt-12">
-                <div>
-                    <p className="font-bold text-2xl pb-2 mb-2 border-b-2 border-gray-200">{solution?.title}</p>
-                    <p className="mb-4">{solution?.description}</p>
-                    <p className="font-medium">Availability:</p>
-                    <p>Start hour: {solution?.startHour}</p>
-                    <p>End hour: {solution?.endHour}</p>
+                <div className="mr-32">
+                    <div className="mb-8">
+                        <p className="font-bold text-2xl pb-2 mb-2 border-b-2 border-gray-200">{solution?.title}</p>
+                        <p>{solution?.description}</p>
+                    </div>
+                    <div className="mb-8">
+                        <p className="font-medium">Availability:</p>
+                        <p>Start hour: {solution?.startHour}</p>
+                        <p>End hour: {solution?.endHour}</p>
+                    </div>
 
-                    <div className="mt-10">
+                    <div>
                         <p>County: {solution?.countyName}</p>
                         <p>City: {solution?.cityName}</p>
                         <p className="mb-2">Who provides this service?</p>

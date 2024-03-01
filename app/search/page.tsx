@@ -108,7 +108,6 @@ export default function Search({ searchParams }) {
     return (
         <div className="mt-8">
             <div className="mb-14 py-12 bg-gray-200">
-                {/* <SearchFilter countyId={countyId} cityId={cityId} categoryId={categoryId} subcategoryId={subcategoryId} setCountyId={setCountyId} setCityId={setCityId} setCategoryId={setCategoryId} setSubcategoryId={setSubcategoryId} /> */}
                 <SearchFilter countyIdProp={countyId} cityIdProp={cityId} categoryIdProp={categoryId} subcategoryIdProp={subcategoryId} />
 			</div>
             {displaySolutions()}

@@ -3,6 +3,7 @@ import MainButton from '@/components/MainButton'
 import Image from 'next/image'
 import construction_icon from "../../../../public/categories/construction_icon.png"
 import Link from 'next/link'
+import { limitTextSize } from '@/app/common/utils';
 
 export default function Card({ solution }: { solution: Solution }, index: number) {
     return (
@@ -18,7 +19,7 @@ export default function Card({ solution }: { solution: Solution }, index: number
                 height={120}
             />
             <Link href={`/solution/${solution.id}`} className="font-semibold text-lg hover:underline">{solution.title}</Link>
-            <p className="font-normal text-gray-600 text-md">{solution.description}</p>
+            <p className="font-normal text-gray-600 text-md">{limitTextSize(solution.description, 122)}{solution.description.length > 122 && "..."}</p>
             <p className="font-normal text-gray-400 text-sm mt-4">Category: {solution.categoryName}</p>
             <p className="font-normal text-gray-400 text-sm mb-6">Subcategory: {solution.subcategoryName}</p>
             <div className="flex justify-between items-center">

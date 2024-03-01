@@ -25,7 +25,7 @@ export default function Navbar() {
             return (
                 <div className="flex">
                     <div className="mr-4">
-                        <MainButton text="Login" linkTo="/login"/>
+                        <MainButton text="Login" linkTo="/login" />
                     </div>
                     <MainButtonOutline text="Register" linkTo="/register/customer" />
                 </div>

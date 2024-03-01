@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 
-export default function MainButtonOutline({ text, linkTo, handleOnClick }: { text: string, linkTo:string }) {
+export default function MainButtonOutline({ text, linkTo, handleOnClick }: { text: string, linkTo:string, handleOnClick: () => void }) {
     if(!linkTo) {
         return (
             <button
