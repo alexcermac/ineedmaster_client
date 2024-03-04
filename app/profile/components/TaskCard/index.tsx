@@ -49,7 +49,7 @@ export default function TaskCard({ task, typeOfTaskByDate }: { task: Task, typeO
                 <div className="mb-6">
                     <p className="font-semibold text-md">Service details:</p>
                     <Link href={`http://localhost:3000/solution/${taskState.solutionId}`} className="font-medium text-sm hover:underline">{taskState.solutionTitle}</Link>
-                    <p className="text-sm">{limitTextSize(taskState.solutionDescription, 80)}</p>
+                    <p className="text-sm">{taskState.solutionDescription && limitTextSize(taskState.solutionDescription, 80)}</p>
                 </div>
                 <div>
                     {/* TODO: change <p> to a Link that redirects to Master's profile */}

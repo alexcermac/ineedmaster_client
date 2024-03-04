@@ -22,14 +22,14 @@ export default function Home() {
 			<div className="mx-auto max-w-6xl flex justify-between items-center text-center lg:flex-auto lg:py-24 lg:text-left">
 				<div>
 					<div className="mb-8">
-						<h1 className="font-bold text-5xl">Fa-ti viata mai usoara</h1>
-						<h1 className="font-bold text-5xl">cu iNeedMaster</h1>
+						<h1 className="font-bold text-5xl">Make your life easier</h1>
+						<h1 className="font-bold text-5xl">with iNeedMaster</h1>
 					</div>
 					<div className="mb-12">
-						<p>Platforma care conecteaza problemele si solutiile in cateva secunde.</p>
+						<p>The platform that connects problems and solutions in a few seconds.</p>
 					</div>
-					<Link href="#" className="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-gray-900 whitespace-no-wrap bg-amber-300 border border-amber-300 rounded-md shadow-sm hover:bg-amber-400 focus:outline-none" data-rounded="rounded-md" data-primary="blue-600" data-primary-reset="{}">
-						Solutii in orasul tau
+					<Link href="/search" className="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-gray-900 whitespace-no-wrap bg-amber-300 border border-amber-300 rounded-md shadow-sm hover:bg-amber-400 focus:outline-none" data-rounded="rounded-md" data-primary="blue-600" data-primary-reset="{}">
+						Search for services
 					</Link>
 				</div>
 				<div>

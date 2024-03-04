@@ -42,7 +42,7 @@ export default function ServicesGrid() {
                             <div className="flex justify-between flex-1 mr-20">
                                 <div className="flex-1 mr-8">
                                     <h3 className="font-semibold text-md">{service?.title}</h3>
-                                    <p>{limitTextSize(service?.description, 65)}</p>
+                                    <p>{service.description && limitTextSize(service?.description, 65)}</p>
                                 </div>
                                 <div className="flex-1 mr-8">
                                     <h3 className="font-semibold text-md">Availability</h3>
