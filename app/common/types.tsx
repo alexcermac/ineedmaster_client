@@ -27,8 +27,22 @@ export interface User {
     role: string
 }
 
+export interface UserMaster {
+    email: string,
+    firstName: string,
+    lastName: string,
+    birthDate: string,
+    phone: string,
+    role: string,
+    solutions: Array<Solution>
+}
+
 export interface Task {
     id: number,
+    customerId: number,
+    customerFirstName: string,
+    customerLastName: string,
+    customerPhoneNumber: string,
     masterId: number,
     masterFirstName: string,
 

@@ -1,3 +1,4 @@
 export function limitTextSize(text, limit = 10) {
-  return text.slice(0, limit);
+
+  return text.slice(0, limit) + (text.length > limit ? '...' : '');
 }

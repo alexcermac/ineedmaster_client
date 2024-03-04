@@ -26,10 +26,10 @@ export default function SolutionById({ params: { id } }) {
     const [errorDateBookingMessage, setErrorDateBookingMessage] = useState("")
 
     useEffect(() => {
-        getSolution()
+        fetchSolution()
     }, [])
 
-    const getSolution = async () => {
+    const fetchSolution = async () => {
         const response = await fetch(`http://localhost:8080/api/solutions/${id}`, {
             method: 'GET',
             headers: {
@@ -146,10 +146,12 @@ export default function SolutionById({ params: { id } }) {
                         <p>County: {solution?.countyName}</p>
                         <p>City: {solution?.cityName}</p>
                         <p className="mb-2">Who provides this service?</p>
-                        <MainButtonOutline text={"Profile of " + solution?.userFirstName} linkTo="#" />
+                        <MainButtonOutline text={"Profile of " + solution?.userFirstName} linkTo={`/profile/public/master/${solution?.userId}`} />
                     </div>
                 </div>
-                <div className="border-2 border-gray-300 px-10 py-8 rounded-2xl">
+                {/* <div className={`border-2 border-gray-300 px-10 py-8 rounded-2xl ${user.role === "ROLE_MASTER" ? "pointer-events-none bg-gray-300" : ""}`}> */}
+                <div className={`border-2 border-gray-300 px-10 py-8 rounded-2xl ${user.role === "ROLE_MASTER" ? "pointer-events-none relative" : ""}`}>
+                    {user.role === "ROLE_MASTER" && <div className="absolute top-0 bottom-0 left-0 right-0 z-50 rounded-2xl bg-gray-700 opacity-50"></div>}
                     <div className="flex flex-col mb-4">
                         <label className="font-medium text-sm" htmlFor="address">Enter address</label>
                         <input
@@ -166,8 +168,9 @@ export default function SolutionById({ params: { id } }) {
                             onChange={(date) => setDateOfTask(date)}
                         />
                     </div>
+                    <p className="font-medium text-sm">Choose your availability time</p>
                     <div className="mb-4">
-                        <p className="font-medium text-sm">Choose start hour</p>
+                        <p className="font-medium text-sm">Start hour</p>
                         <DatePicker
                             className="border-2 rounded-xl py-1 px-4 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
                             selected={startHour}
@@ -180,7 +183,7 @@ export default function SolutionById({ params: { id } }) {
                         />
                     </div>
                     <div className="mb-10">
-                        <p className="font-medium text-sm">Choose end hour</p>
+                        <p className="font-medium text-sm">End hour</p>
                         <DatePicker
                             className="border-2 rounded-xl py-1 px-4 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
                             selected={endHour}

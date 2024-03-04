@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from "react";
 import { Solution } from '@/app/common/types'
-import Card from "./components/Card";
+import SolutionCard from "@/components/SolutionCard";
 import SearchFilter from "@/components/SearchFilter";
 
 const URL_BASE = "http://localhost:8080/api/solutions"
@@ -95,7 +95,7 @@ export default function Search({ searchParams }) {
             <div className="mx-auto max-w-6xl grid grid-cols-4 gap-6">
                 {solutions.map((solution: Solution, index) => {
                     return (
-                        <Card
+                        <SolutionCard
                             solution={solution}
                             index={index}
                         />

@@ -1,6 +1,4 @@
 "use client"
-import create_solution_illustration from '@/public/create_solution_illustration.svg'
-import Image from 'next/image'
 import MainButton from '@/components/MainButton'
 import DatePicker from "react-datepicker"
 import { useEffect, useState } from 'react'
@@ -10,10 +8,13 @@ import Modal from '@/components/Modal'
 import { useUserStore } from '@/stores/userStore'
 import ModalSuccess from '@/components/ModalSuccess'
 import { useRouter } from 'next/navigation'
+import ButtonErrorOutline from '@/components/ButtonErrorOutline'
 
-export default function CreateSolution() {
+export default function EditSolution({ params: { id } }: { params: { id: string } }) {
     const router = useRouter()
     const [user] = useUserStore(state => [state.user])
+
+    const [solution, setSolution] = useState<Solution | null>(null)
 
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
@@ -36,9 +37,32 @@ export default function CreateSolution() {
     const [displaySuccessModal, setDisplaySuccessModal] = useState(false)
 
     useEffect(() => {
+        fetchSolution()
+
         fetchCountyList()
         fetchCategoryList()
     }, [])
+
+    const fetchSolution = async () => {
+        const response = await fetch(`http://localhost:8080/api/solutions/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        
+        if (!response.ok) {
+            const data = await response.json()
+            // setSolutionFetchError(data.message)
+            console.log("Failed to fetch solution");
+            
+        } else {
+            const data = await response.json()
+            setSolution(data)
+            console.log("Fetched solution: ", data);
+            
+        }
+    }
 
     const fetchCountyList = async () => {
 		try {
@@ -152,7 +176,10 @@ export default function CreateSolution() {
 		}
 	}
 
-    const handleSubmit = async () => {
+    const handleSaveSubmit = async () => {
+
+        return
+
         const newSolution = {
             userId: user.id,
             title: title,
@@ -207,19 +234,19 @@ export default function CreateSolution() {
         <div>
             {submitErrorMessage && <Modal message={submitErrorMessage} handleModalClose={() => setSubmitErrorMessage("")} />}
             {displaySuccessModal && <ModalSuccess message="Solution created successfully" handleModalClose={() => router.push("/profile")} />}
-            <div className="mx-auto max-w-6xl mt-6">
+            <div className="mx-auto max-w-6xl mt-8">
                 <div className="flex justify-between">
-                    <div className="flex-grow mr-10">
-                        <h1 className="font-semibold text-2xl mb-6">Create a new solution</h1>
+                    <div className="mx-auto max-w-3xl flex-grow ">
+                        <h1 className="font-semibold text-2xl mb-6">Edit your service</h1>
                         <div className="flex flex-col mb-6">
                             <label className="font-medium text-md">Title</label>
-                            <input type="text" className="border-2 rounded-xl py-1 px-4 hover:bg-gray-50 hover:shadow-sm transition duration-100 ease-in-out" value={title} onChange={(event) => setTitle(event.target.value)}/>
+                            <input type="text" className="border-2 rounded-xl py-1 px-4 hover:bg-gray-50 hover:shadow-sm transition duration-100 ease-in-out" value={solution?.title} onChange={(event) => setTitle(event.target.value)}/>
                         </div>
                         <div className="flex flex-col mb-10">
                             <label className="font-medium text-md">Description</label>
-                            <textarea type="text" className="border-2 rounded-xl py-1 px-4 hover:bg-gray-50 hover:shadow-sm transition duration-100 ease-in-out" vlaue={description} onChange={(event) => setDescription(event.target.value)}/>
+                            <textarea type="text" className="border-2 rounded-xl py-1 px-4 hover:bg-gray-50 hover:shadow-sm transition duration-100 ease-in-out" vlaue={solution?.description} onChange={(event) => setDescription(event.target.value)}/>
                         </div>
-                        <div className="flex justify-center mb-10">
+                        <div className="flex justify-center mb-14">
                             <div className="border-r-2 pr-10 mr-10 start flex-1">
                                 <div className="flex flex-col mb-4">
                                     <label className="font-medium text-md">Type</label>
@@ -318,13 +345,18 @@ export default function CreateSolution() {
                                 </div>
                             </div>
                         </div>
-                        <div className="flex justify-center ">
+                        {/* <div className="flex justify-center ">
                             <MainButton text="Create solution" handleOnClick={handleSubmit} />
+                        </div> */}
+                        <div className="flex justify-around">
+                            <ButtonErrorOutline text="Delete service" linkTo="/profile" />
+                            <MainButton text="Save changes" handleOnClick={handleSaveSubmit}/>
                         </div>
                     </div>
-                    <div className="flex-4">
-                        <Image src={create_solution_illustration} alt="Create solution illustration" />
-                    </div>
+                    {/* <div className="flex-grow flex flex-col justify-start items-end">
+                        <MainButton text="Save changes" handleOnClick={handleSaveSubmit}/>
+                        <ButtonErrorOutline text="Delete service" linkTo="/profile" />
+                    </div> */}
                 </div>
             </div>
         </div>

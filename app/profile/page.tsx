@@ -7,6 +7,7 @@ import SignOutButton from '@/components/SignOutButton'
 import Modal from '@/components/Modal'
 import ProfilePageTabs from './components/ProfilePageTabs'
 import TasksGrid from './components/TasksGrid'
+import ServicesGrid from './components/ServicesGrid'
 
 export default function Profile() {
     const router = useRouter()
@@ -20,8 +21,10 @@ export default function Profile() {
     }, [])
 
     useEffect(() => {
-        if (userError) {
-            setDisplayModal(true)
+        if(!userLoading) {
+            if (userError) {
+                setDisplayModal(true)
+            }
         }
     }, [userError])
 
@@ -30,12 +33,8 @@ export default function Profile() {
             return <TasksGrid typeOfTasks="futureTasks" />
         } else if (activeTab === "historyTasks") {
             return <TasksGrid typeOfTasks="historyTasks" />
-        } else {
-            return (
-                <div>
-                    <p>Something went wrong.</p>
-                </div>
-            )
+        } else if (activeTab === "services") {
+            return <ServicesGrid />
         }
     }
 
