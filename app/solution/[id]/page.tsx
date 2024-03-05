@@ -30,7 +30,7 @@ export default function SolutionById({ params: { id } }) {
     }, [])
 
     const fetchSolution = async () => {
-        const response = await fetch(`http://localhost:8080/api/solutions/${id}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL_PREFIX}/api/solutions/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ export default function SolutionById({ params: { id } }) {
             address: address
         }
         
-        const response = await fetch(`http://localhost:8080/api/tasks`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL_PREFIX}/api/tasks`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

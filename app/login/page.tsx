@@ -16,7 +16,7 @@ export default function Login() {
         event.preventDefault()
 
         try {
-            const response = await fetch('http://localhost:8080/api/auth/authenticate', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL_PREFIX}/api/auth/authenticate`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -10,7 +10,7 @@ export const useUserStore = create((set, get) => ({
 
         try {
             const token = localStorage.getItem("token")
-            const response = await fetch("http://localhost:8080/api/users", {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_URL_PREFIX}/api/users`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

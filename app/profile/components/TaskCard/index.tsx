@@ -10,7 +10,7 @@ export default function TaskCard({ task, typeOfTaskByDate }: { task: Task, typeO
     const [taskState, setTaskState] = useState<Task>(task)
      
     const handleCancelTask = async () => {
-        const response = await fetch(`http://localhost:8080/api/tasks/${task.id}/customer`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL_PREFIX}/api/tasks/${task.id}/customer`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

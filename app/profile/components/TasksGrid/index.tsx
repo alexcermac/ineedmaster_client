@@ -28,7 +28,7 @@ export default function TasksGrid({ typeOfTasks }) {
 
     // TODO: create a single function for fetching tasks with many params
     const fetchFutureTasks = async () => {
-        const response = await fetch(`http://localhost:8080/api/tasks/${role}/${user.id}/future?${todayDateForQueryParameter}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL_PREFIX}/api/tasks/${role}/${user.id}/future?${todayDateForQueryParameter}`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ export default function TasksGrid({ typeOfTasks }) {
     }
 
     const fetchHistoryTasks = async () => {
-        const response = await fetch(`http://localhost:8080/api/tasks/${role}/${user.id}/old?${todayDateForQueryParameter}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL_PREFIX}/api/tasks/${role}/${user.id}/old?${todayDateForQueryParameter}`, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -73,12 +73,12 @@ export default function TasksGrid({ typeOfTasks }) {
         }
 
         if(user?.role === "ROLE_CUSTOMER") {
-            return tasks.map(task => {
-                return <TaskCard task={task} typeOfTaskByDate={typeOfTaskByDate} />
+            return tasks.map((task, index) => {
+                return <TaskCard task={task} typeOfTaskByDate={typeOfTaskByDate} key={index} />
             })
         } else if (user?.role === "ROLE_MASTER") {
-            return tasks.map(task => {
-                return <TaskCardForMaster task={task} typeOfTaskByDate={typeOfTaskByDate} />
+            return tasks.map((task, index) => {
+                return <TaskCardForMaster task={task} typeOfTaskByDate={typeOfTaskByDate} key={index} />
             })
         }
     }

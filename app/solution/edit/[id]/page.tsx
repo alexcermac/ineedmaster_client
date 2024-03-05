@@ -15,7 +15,8 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
     const router = useRouter()
     const [user] = useUserStore(state => [state.user])
 
-    const [solution, setSolution] = useState<Solution | null>(null)
+    // const [solution, setSolution] = useState<Solution | null>(null)
+    const [solution, setSolution] = useState(null)
     const [solutionFetchError, setSolutionFetchError] = useState("")
 
     const [countyList, setCountyList] = useState([])
@@ -34,7 +35,7 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
     }, [])
 
     const fetchSolution = async () => {
-        const response = await fetch(`http://localhost:8080/api/solutions/${id}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL_PREFIX}/api/solutions/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -58,7 +59,7 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
 
     const fetchCountyList = async () => {
 		try {
-			const response = await fetch("http://localhost:8080/api/counties", {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_URL_PREFIX}/api/counties`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -81,7 +82,7 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
 
 	const fetchCategoryList = async () => {
 		try {
-			const response = await fetch("http://localhost:8080/api/categories", {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_URL_PREFIX}/api/categories`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -125,7 +126,7 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
 
 		if(solution?.countyId != -1) {
 			// We are using the countyId as the index in the array, so we need to subtract 1
-			return countyList[solution?.countyId - 1].cities.map((city, index) => {
+			return countyList[solution?.countyId - 1].cities.map((city, index) => {                
 				return (
 					<option key={index} value={city.id}>{city.name}</option>
 				)
@@ -156,9 +157,12 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
 			return <option>Loading</option>
 		}
 
-		if(solution?.categoryId != -1) {
+        console.log("CategoryList: ", categoryList);
+        
+
+		if(solution.categoryId != -1) {
 			// We are using the categoryId as the index in the array, so we need to subtract 1
-			return categoryList[solution?.categoryId - 1].subcategories.map((subcategory, index) => {
+			return categoryList[solution.categoryId - 1].subcategories.map((subcategory, index) => {
 				return (
 					<option key={index} value={subcategory.id}>{subcategory.name}</option>
 				)
@@ -199,9 +203,12 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
             setSubmitErrorMessage("Please select a subcategory.")
             return
         }
+
+        console.log("New solution: ", newSolution);
+        
         
 
-        const response = await fetch(`http://localhost:8080/api/solutions/${id}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL_PREFIX}/api/solutions/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -217,6 +224,10 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
         } else {
             console.log("Failed to create solution")
         }
+    }
+
+    if(!solution) {
+        return <div>Loading...</div>
     }
 
     return (
@@ -294,7 +305,7 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
                                         onChange={(event) => {
                                             // setCountyId(event.target.value)
                                             // setCityId(-1)
-                                            setSolution({ ...solution, countyId: event.target.value, cityId: -1})
+                                            setSolution({ ...solution, countyId: Number(event.target.value), cityId: -1})
                                         }}
                                     >
                                         <option value={-1} selected>Choose a county</option>
@@ -308,7 +319,7 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
                                         className="border-2 rounded-xl py-1 px-4 w-60 max-w-60 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
                                         value={solution?.cityId}
                                         // onChange={(event) => setCityId(event.target.value)}
-                                        onChange={(event) => setSolution({...solution, cityId: event.target.value })}
+                                        onChange={(event) => setSolution({ ...solution, cityId: Number(event.target.value) })}
                                     >
                                         <option value={-1} selected>Choose a city</option>
                                         {(countyList.length > 0) && displayCityList()}
@@ -323,11 +334,11 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
                                         onChange={(event) => {
                                             // setCategoryId(event.target.value)
                                             // setSubcategoryId(-1)
-                                            setSolution({ ...solution, categoryId: event.target.value, subcategoryId: -1 })
+                                            setSolution({ ...solution, categoryId: Number(event.target.value), subcategoryId: -1 })
                                         }}
                                     >
                                         <option value={-1} selected>Choose a category</option>
-                                        {categoryList && displayCategoryList()}
+                                        {solution && categoryList && displayCategoryList()}
                                     </select>
                                 </div>
                                 <div className="flex flex-col mb-4">
@@ -337,10 +348,10 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
                                         className="border-2 rounded-xl py-1 px-4 w-60 max-w-60 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
                                         value={solution?.subcategoryId}
                                         // onChange={(event) => setSubcategoryId(event.target.value)}
-                                        onChange={(event) => setSolution({ ...solution, subcategoryId: event.target.value })}
+                                        onChange={(event) => setSolution({ ...solution, subcategoryId: Number(event.target.value) })}
                                     >
                                         <option value={-1} selected>Choose a subcategory</option>
-                                        {(categoryList.length > 0) && displaySubcategoryList()}
+                                        {solution && (categoryList.length > 0) && displaySubcategoryList()}
                                     </select>
                                 </div>
                             </div>

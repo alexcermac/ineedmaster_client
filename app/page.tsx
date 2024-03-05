@@ -9,13 +9,60 @@ import iron_gate_icon from "../public/categories/iron_gate_icon.png"
 import thermics_icon from "../public/categories/thermics_icon.png"
 import Image from "next/image"
 import SearchFilter from "@/components/SearchFilter"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import SolutionCard from "@/components/SolutionCard"
 
 export default function Home() {
 	const [countyId, setCountyId] = useState(-1)
 	const [cityId, setCityId] = useState(-1)
 	const [categoryId, setCategoryId] = useState(-1)
 	const [subcategoryId, setSubcategoryId] = useState(-1)
+
+	const [last10Solutions, setLast10Solutions] = useState([])
+	const [last10SolutionsLoaded, setLast10SolutionsLoaded] = useState(false)
+	const [fetchSolutionsError, setFetchSolutionsError] = useState("")
+
+	useEffect(() => {
+		fetchLast10Solutions()
+	}, [])
+
+	const fetchLast10Solutions = async () => {
+		// const response = await fetch('http://localhost:8080/api/solutions/last-10', {
+		// const response = await fetch('http://13.53.40.8:8080/api/solutions/last-10', {
+		const response = await fetch(`${process.env.NEXT_PUBLIC_URL_PREFIX}/api/solutions/last-10`, {
+			method: 'GET',
+			headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        
+        if (!response.ok) {
+            const data = await response.json()
+            setFetchSolutionsError(data.message ? data.message : "Error fetching last solutions.")
+
+        } else {
+            const data = await response.json()
+            setLast10Solutions(data)
+        }
+		setLast10SolutionsLoaded(true)
+	}
+
+	const displayLast10Solutions = () => {
+		if(!last10SolutionsLoaded) {
+			return <p>Loading services</p>
+		}
+		if(last10SolutionsLoaded && last10Solutions.length === 0) {
+			return <p>No service found</p>
+		}
+
+		return (
+			<div className="grid grid-cols-4 gap-8">
+				{last10Solutions.map((solution, index) => {
+					return <SolutionCard index={index} solution={solution} />
+				})}
+			</div>
+		)
+	}
 
 	return (
 		<div className="">
@@ -111,10 +158,9 @@ export default function Home() {
 			</div>
 			<div className="mx-auto max-w-6xl">
 				<p className="font-bold text-2xl mb-12">Cele mai noi anunturi</p>
-				<div className="flex justify-between">
-				</div>
-				{/* TODO: Get last 10 records */}
+				{/* <div className="flex justify-between"> */}
+				{displayLast10Solutions()}
 			</div>
 		</div>
-	);
+	)
 }

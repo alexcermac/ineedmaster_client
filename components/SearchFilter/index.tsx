@@ -45,7 +45,7 @@ export default function SearchFilter({ countyIdProp, cityIdProp, categoryIdProp,
 
 	const fetchCountyList = async () => {
 		try {
-			const response = await fetch("http://localhost:8080/api/counties", {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_URL_PREFIX}/api/counties`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ export default function SearchFilter({ countyIdProp, cityIdProp, categoryIdProp,
 
 	const fetchCategoryList = async () => {
 		try {
-			const response = await fetch("http://localhost:8080/api/categories", {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_URL_PREFIX}/api/categories`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',

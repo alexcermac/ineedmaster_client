@@ -14,7 +14,7 @@ export default function ProfilePublicMaster({ params: { id } }) {
     }, [])
 
     const fetchUser = async () => {
-        const response = await fetch(`http://localhost:8080/api/users/master/${id}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL_PREFIX}/api/users/master/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ export default function ProfilePublicMaster({ params: { id } }) {
 
         return <div className="mx-auto max-w-6xl mt-8 grid grid-cols-3 gap-16">
             {masterInformation.solutions.map((solution, index) => {
-                return <SolutionCard solution={solution} index={index} />
+                return <SolutionCard solution={solution} key={index} />
             })}
         </div>
     }

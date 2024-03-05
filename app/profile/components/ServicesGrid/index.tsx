@@ -14,7 +14,7 @@ export default function ServicesGrid() {
     }, [])
 
     const fetchServices = async () => {
-        const response = await fetch(`http://localhost:8080/api/solutions/master/${user?.id}`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL_PREFIX}/api/solutions/master/${user?.id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

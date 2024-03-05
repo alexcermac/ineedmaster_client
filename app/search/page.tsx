@@ -4,7 +4,7 @@ import { Solution } from '@/app/common/types'
 import SolutionCard from "@/components/SolutionCard";
 import SearchFilter from "@/components/SearchFilter";
 
-const URL_BASE = "http://localhost:8080/api/solutions"
+const URL_BASE = `${process.env.NEXT_PUBLIC_URL_PREFIX}/api/solutions`
 
 export default function Search({ searchParams }) {
     const urlParams = new URLSearchParams(searchParams)
@@ -97,7 +97,7 @@ export default function Search({ searchParams }) {
                     return (
                         <SolutionCard
                             solution={solution}
-                            index={index}
+                            key={index}
                         />
                     )
                 })}

@@ -24,7 +24,7 @@ export default function RegisterCustomer() {
         }
         
         try {
-            fetch('http://localhost:8080/api/auth/register', {
+            fetch(`${process.env.NEXT_PUBLIC_URL_PREFIX}/api/auth/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

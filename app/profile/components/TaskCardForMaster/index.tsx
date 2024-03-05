@@ -11,7 +11,7 @@ export default function TaskCardForMaster({ task, typeOfTaskByDate }: { task: Ta
     const [taskState, setTaskState] = useState<Task>(task)
      
     const handleAcceptTask = async () => {
-        const response = await fetch(`http://localhost:8080/api/tasks/${task.id}/master`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL_PREFIX}/api/tasks/${task.id}/master`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ export default function TaskCardForMaster({ task, typeOfTaskByDate }: { task: Ta
     }
 
     const handleDenyTask = async () => {
-        const response = await fetch(`http://localhost:8080/api/tasks/${task.id}/master`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL_PREFIX}/api/tasks/${task.id}/master`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export default function TaskCardForMaster({ task, typeOfTaskByDate }: { task: Ta
     }
 
     const handleCancelTask = async () => {
-        const response = await fetch(`http://localhost:8080/api/tasks/${task.id}/master`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL_PREFIX}/api/tasks/${task.id}/master`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
