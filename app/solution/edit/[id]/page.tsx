@@ -13,10 +13,10 @@ import { Solution } from '@/app/common/types'
 
 export default function EditSolution({ params: { id } }: { params: { id: string } }) {
     const router = useRouter()
-    const [user] = useUserStore(state => [state.user])
+    const [user] = useUserStore((state: any) => [state.user])
 
     // const [solution, setSolution] = useState<Solution | null>(null)
-    const [solution, setSolution] = useState(null)
+    const [solution, setSolution] = useState<Solution | any>(null)
     const [solutionFetchError, setSolutionFetchError] = useState("")
 
     const [countyList, setCountyList] = useState([])
@@ -120,20 +120,23 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
 			return <option>Failed to fetch data</option>
 		}
 
-		if(countyList.length === 0) {
-			return <option>Loading</option>
-		}
+        if(countyList.length === 0) {
+            return <option>Loading</option>
+        }
 
-		if(solution?.countyId != -1) {
-			// We are using the countyId as the index in the array, so we need to subtract 1
-			return countyList[solution?.countyId - 1].cities.map((city, index) => {                
-				return (
-					<option key={index} value={city.id}>{city.name}</option>
-				)
-			})
-		} else {
-			return null
-		}
+        if (solution?.countyId != -1) {
+            // We are using the countyId as the index in the array, so we need to subtract 1
+            const selectedCounty = countyList[solution?.countyId - 1] as { cities: { id: number, name: string }[] };
+            if (selectedCounty && selectedCounty.cities) {
+                return selectedCounty.cities.map((city, index) => {
+                    return (
+                        <option key={index} value={city.id}>{city.name}</option>
+                    )
+                })
+            }
+        } else {
+            return null
+        }
 	}
 
 	const displayCategoryList = () => {
@@ -162,11 +165,15 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
 
 		if(solution.categoryId != -1) {
 			// We are using the categoryId as the index in the array, so we need to subtract 1
-			return categoryList[solution.categoryId - 1].subcategories.map((subcategory, index) => {
-				return (
-					<option key={index} value={subcategory.id}>{subcategory.name}</option>
-				)
-			})
+            const selectedCategory = categoryList[solution.categoryId - 1] as { subcategories: { id: number, name: string }[] }
+            if (selectedCategory && selectedCategory?.subcategories) {
+                // return categoryList[solution.categoryId - 1].subcategories.map((subcategory, index) => {
+                return selectedCategory.subcategories.map((subcategory, index) => {
+                    return (
+                        <option key={index} value={subcategory.id}>{subcategory.name}</option>
+                    )
+                })
+            }
 		} else {
 			return null
 		}
@@ -249,7 +256,7 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
                         <div className="flex flex-col mb-10">
                             <label className="font-medium text-md">Description</label>
                             <textarea
-                                type="text" className="border-2 rounded-xl py-1 px-4 hover:bg-gray-50 hover:shadow-sm transition duration-100 ease-in-out"
+                                className="border-2 rounded-xl py-1 px-4 hover:bg-gray-50 hover:shadow-sm transition duration-100 ease-in-out"
                                 value={solution?.description}
                                 onChange={(event) => setSolution({ ...solution, description: event.target.value })}/>
                         </div>
@@ -258,7 +265,6 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
                                 <div className="flex flex-col mb-4">
                                     <label className="font-medium text-md">Type</label>
                                     <select
-                                        type="text"
                                         className="border-2 rounded-xl py-1 px-4 w-40 max-w-40 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
                                         value={solution?.type}
                                         onChange={(event) => setSolution({ ...solution, type: event.target.value })}
@@ -299,7 +305,6 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
                                 <div className="flex flex-col mb-4">
                                     <label className="font-medium text-md">County</label>
                                     <select
-                                        type="text"
                                         className="border-2 rounded-xl py-1 px-4 w-60 max-w-60 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
                                         value={solution?.countyId}
                                         onChange={(event) => {
@@ -315,7 +320,6 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
                                 <div className="flex flex-col mb-4">
                                     <label className="font-medium text-md">City</label>
                                     <select
-                                        type="text"
                                         className="border-2 rounded-xl py-1 px-4 w-60 max-w-60 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
                                         value={solution?.cityId}
                                         // onChange={(event) => setCityId(event.target.value)}
@@ -328,7 +332,6 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
                                 <div className="flex flex-col mb-4">
                                     <label className="font-medium text-md">Category</label>
                                     <select
-                                        type="text" 
                                         className="border-2 rounded-xl py-1 px-4 w-60 max-w-60 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
                                         value={solution?.categoryId}
                                         onChange={(event) => {
@@ -344,7 +347,6 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
                                 <div className="flex flex-col mb-4">
                                     <label className="font-medium text-md">Subcategory</label>
                                     <select
-                                        type="text"
                                         className="border-2 rounded-xl py-1 px-4 w-60 max-w-60 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
                                         value={solution?.subcategoryId}
                                         // onChange={(event) => setSubcategoryId(event.target.value)}

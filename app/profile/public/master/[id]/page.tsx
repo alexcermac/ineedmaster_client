@@ -5,7 +5,7 @@ import { UserIcon } from '@heroicons/react/24/outline'
 import SignOutButton from "@/components/SignOutButton"
 import SolutionCard from "@/components/SolutionCard"
 
-export default function ProfilePublicMaster({ params: { id } }) {
+export default function ProfilePublicMaster({ params: { id } }: { params: { id: Number } }) {
     const [masterInformation, setMasterInformation] = useState<UserMaster | null>(null)
     const [dataFetchError, setDataFetchError] = useState("")
     

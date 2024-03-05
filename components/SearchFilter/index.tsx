@@ -3,17 +3,13 @@ import { useEffect, useState } from "react"
 import SearchButton from "../SearchButton"
 
 interface Props {
-	countyId: number
-	cityId: number
-	categoryId: number
-	subcategoryId: number
-	setCountyId: (countyId: number) => void
-	setCityId: (cityId: number) => void
-	setCategoryId: (categoryId: number) => void
-	setSubcategoryId: (subcategoryId: number) => void
+	countyIdProp: number
+	cityIdProp: number
+	categoryIdProp: number
+	subcategoryIdProp: number
 }
 
-export default function SearchFilter({ countyIdProp, cityIdProp, categoryIdProp, subcategoryIdProp }) {
+export default function SearchFilter({ countyIdProp, cityIdProp, categoryIdProp, subcategoryIdProp }: Props) {
 // export default function SearchFilter() {
 // export default function SearchFilter({ countyId, cityId, categoryId, subcategoryId, setCountyId, setCityId, setCategoryId, setSubcategoryId }: Props) {
     const [countyList, setCountyList] = useState([])
@@ -112,11 +108,16 @@ export default function SearchFilter({ countyIdProp, cityIdProp, categoryIdProp,
 
 		if(countyId != -1) {
 			// We are using the countyId as the index in the array, so we need to subtract 1
-			return countyList[countyId - 1].cities.map((city, index) => {
-				return (
-					<option key={index} value={city.id}>{city.name}</option>
-				)
-			})
+			const selectedCounty = countyList[countyId - 1] as { id: number, name: string, cities: { id: number, name: string }[] }
+			if(selectedCounty && selectedCounty.cities) {
+				return selectedCounty.cities.map((city, index) => {
+					return (
+						<option key={index} value={city.id}>{city.name}</option>
+					)
+				})
+			} else {
+				return null
+			}
 		} else {
 			return null
 		}
@@ -145,11 +146,16 @@ export default function SearchFilter({ countyIdProp, cityIdProp, categoryIdProp,
 
 		if(categoryId != -1) {
 			// We are using the categoryId as the index in the array, so we need to subtract 1
-			return categoryList[categoryId - 1].subcategories.map((subcategory, index) => {
-				return (
-					<option key={index} value={subcategory.id}>{subcategory.name}</option>
-				)
-			})
+			const selectedCategory = categoryList[categoryId - 1] as { id: number, name: string, subcategories: { id: number, name: string }[] }
+			if(selectedCategory && selectedCategory.subcategories) {
+				return selectedCategory.subcategories.map((subcategory, index) => {
+					return (
+						<option key={index} value={subcategory.id}>{subcategory.name}</option>
+					)
+				})
+			} else {
+				return null
+			}
 		} else {
 			return null
 		}
@@ -162,7 +168,7 @@ export default function SearchFilter({ countyIdProp, cityIdProp, categoryIdProp,
 				<select
 					className="bg-gray-50 border-2 text-gray-900 text-sm rounded-lg focus:border-amber-300 block w-full p-2.5 dark:placeholder-gray-400  dark:focus:ring-amber-300 dark:focus:border-amber-300 dark:focus:outline-4"
 					value={countyId}
-					onChange={(event) => {
+					onChange={(event: any) => {
 						setCountyId(event.target.value)
 						setCityId(-1)
 					}}
@@ -176,7 +182,7 @@ export default function SearchFilter({ countyIdProp, cityIdProp, categoryIdProp,
 				<select
 					className="bg-gray-50 border-2 text-gray-900 text-sm rounded-lg focus:border-amber-300 block w-full p-2.5 dark:placeholder-gray-400  dark:focus:ring-amber-300 dark:focus:border-amber-300 dark:focus:outline-4"
 					value={cityId}
-					onChange={(event) => setCityId(event.target.value)}
+					onChange={(event: any) => setCityId(event.target.value)}
 				>
 					<option value={-1} selected>Choose a city</option>
 					{(countyList.length > 0) && displayCityList()}
@@ -187,7 +193,7 @@ export default function SearchFilter({ countyIdProp, cityIdProp, categoryIdProp,
 				<select
 					className="bg-gray-50 border-2 text-gray-900 text-sm rounded-lg focus:border-amber-300 block w-full p-2.5 dark:placeholder-gray-400  dark:focus:ring-amber-300 dark:focus:border-amber-300 dark:focus:outline-4"
 					value={categoryId}
-					onChange={(event) => {
+					onChange={(event: any) => {
 						setCategoryId(event.target.value)
 						setSubcategoryId(-1)
 					}}
@@ -201,7 +207,7 @@ export default function SearchFilter({ countyIdProp, cityIdProp, categoryIdProp,
 				<select
 					className="bg-gray-50 border-2 text-gray-900 text-sm rounded-lg focus:border-amber-300 block w-full p-2.5 dark:placeholder-gray-400  dark:focus:ring-amber-300 dark:focus:border-amber-300 dark:focus:outline-4"
 					value={subcategoryId}
-					onChange={(event) => setSubcategoryId(event.target.value)}
+					onChange={(event: any) => setSubcategoryId(event.target.value)}
 				>
 					<option value={-1} selected>Choose a subcategory</option>
 					{(categoryList.length > 0) && displaySubcategoryList()}

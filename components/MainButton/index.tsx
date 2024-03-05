@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-export default function MainButton({ text, linkTo, handleOnClick, submitLoading }: { text: string, linkTo: string | null, handleOnClick: () => void, submitLoading: boolean | null }) {
+export default function MainButton({ text, linkTo, handleOnClick, submitLoading }: { text: string, linkTo?: string, handleOnClick?: any, submitLoading?: boolean | null }) {
 
     if(!linkTo) {
         return (

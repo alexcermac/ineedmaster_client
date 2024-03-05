@@ -6,7 +6,7 @@ import SearchFilter from "@/components/SearchFilter";
 
 const URL_BASE = `${process.env.NEXT_PUBLIC_URL_PREFIX}/api/solutions`
 
-export default function Search({ searchParams }) {
+export default function Search({ searchParams }: { searchParams: URLSearchParams }) {
     const urlParams = new URLSearchParams(searchParams)
 
     const [solutions, setSolutions] = useState([])

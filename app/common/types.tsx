@@ -60,3 +60,12 @@ export interface Task {
     status: string,
     address: string
 }
+
+export interface UserStore {
+    user: User,
+    userError: string,
+    userLoading: boolean,
+    userLogoutLoading: boolean,
+    getUser: () => {},
+    logout: () => {}
+}

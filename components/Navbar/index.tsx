@@ -7,7 +7,7 @@ import { useEffect } from "react"
 import { UserIcon } from '@heroicons/react/24/outline'
 
 export default function Navbar() {
-    const [user, getUser, userLoading] = useUserStore(state => [state.user, state.getUser, state.userLoading])
+    const [user, getUser, userLoading] = useUserStore((state: any) => [state.user, state.getUser, state.userLoading])
 
     useEffect(() => {
         getUser()

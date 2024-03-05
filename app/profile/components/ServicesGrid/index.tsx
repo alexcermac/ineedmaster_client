@@ -4,7 +4,7 @@ import { useUserStore } from '@/stores/userStore'
 import { limitTextSize } from '@/app/common/utils'
 
 export default function ServicesGrid() {
-    const [user] = useUserStore(state => [state.user])
+    const [user] = useUserStore((state: any) => [state.user])
 
     const [services, setServices] = useState([])
     const [errorFetchServices, setErrorFetchServices] = useState("")
@@ -36,7 +36,7 @@ export default function ServicesGrid() {
 
         return (
             <div className="">
-                {services.map((service, index) => {
+                {services.map((service: any, index: number) => {
                     return (
                         <div key={index} className="flex border p-4 rounded-lg mb-8 flex justify-between items-center">
                             <div className="flex justify-between flex-1 mr-20">

@@ -2,7 +2,7 @@ import Image from "next/image";
 import MainButton from "../MainButton";
 import SuccessfullIcon from "@/public/successful_icon.png"
 
-export default function ModalSuccess({ message, handleModalClose }) {
+export default function ModalSuccess({ message, handleModalClose }: { message: string, handleModalClose: any }) {
     return (
         <div
             className="w-full h-full bg-gray-800 bg-opacity-60 fixed top-0 left-0 z-50 flex items-center justify-center"

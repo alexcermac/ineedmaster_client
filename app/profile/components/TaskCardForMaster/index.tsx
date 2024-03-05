@@ -91,8 +91,8 @@ export default function TaskCardForMaster({ task, typeOfTaskByDate }: { task: Ta
                 </div>
                 <div className="mt-4 mb-4">
                     <p className="text-sm">Address: {taskState.address}</p>
-                    <p className="font-semibold text-sm text-gray-400 hover:cursor-pointer hover:underline">{taskState.categoryName}</p>
-                    <p className="font-semibold text-sm text-gray-400 hover:cursor-pointer hover:underline">{taskState.subcategoryName}</p>
+                    <p className="font-semibold text-sm text-gray-400 hover:cursor-pointer hover:underline">{taskState.solutionCategoryName}</p>
+                    <p className="font-semibold text-sm text-gray-400 hover:cursor-pointer hover:underline">{taskState.solutionSubcategoryName}</p>
                     <p>{taskState.solutionType === "PRICE" ? "Price: " + taskState.solutionPrice + " euros" : "Verification"}</p>
                 </div>
                 

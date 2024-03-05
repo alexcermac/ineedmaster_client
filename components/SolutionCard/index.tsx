@@ -6,11 +6,11 @@ import construction_icon from "../../public/categories/construction_icon.png"
 import Link from 'next/link'
 import { limitTextSize } from '@/app/common/utils';
 
-// export default function SolutionCard({ solution }: { solution: Solution }, index: number) {
-export default function SolutionCard({ solution, index }: { solution: Solution, index: number }) {
+// export default function SolutionCard({ solution }: { solution: Solution }, key: number) {
+export default function SolutionCard({ solution, key }: { solution: Solution, key: number }) {
     return (
         <div
-            key={index}
+            key={key}
             className="border-2 rounded-xl py-2 px-4 hover:bg-gray-100 hover:shadow-md transition duration-250 ease-in-out"
         >
             <Image

@@ -6,7 +6,7 @@ import { useUserStore } from "@/stores/userStore"
 
 export default function Login() {
     const router = useRouter()
-    const [user, getUser] = useUserStore(state => [state.user, state.getUser])
+    const [user, getUser] = useUserStore((state: any) => [state.user, state.getUser])
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-export default function ButtonSuccess({ text, linkTo, handleOnClick }: { text: string, linkTo:string }) {
+export default function ButtonSuccess({ text, linkTo, handleOnClick }: { text: string, linkTo?: string, handleOnClick?: any }) {
 
     if(!linkTo) {
         return (

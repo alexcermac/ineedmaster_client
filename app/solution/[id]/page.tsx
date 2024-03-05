@@ -11,9 +11,9 @@ import DatePicker from "react-datepicker"
 
 import "react-datepicker/dist/react-datepicker.css"
 
-export default function SolutionById({ params: { id } }) {
+export default function SolutionById({ params: { id } }: { params: { id: Number } }) {
     const router = useRouter()
-    const [user] = useUserStore(state => [state.user])
+    const [user] = useUserStore((state: any) => [state.user])
 
     const [solution, setSolution] = useState<Solution | null>(null)
     const [dataFetchError, setDataFetchError] = useState("")
@@ -165,7 +165,7 @@ export default function SolutionById({ params: { id } }) {
                         <DatePicker
                             className="border-2 rounded-xl py-1 px-4 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
                             selected={dateOfTask}
-                            onChange={(date) => setDateOfTask(date)}
+                            onChange={(date: Date) => setDateOfTask(date)}
                         />
                     </div>
                     <p className="font-medium text-sm">Choose your availability time</p>
@@ -174,7 +174,7 @@ export default function SolutionById({ params: { id } }) {
                         <DatePicker
                             className="border-2 rounded-xl py-1 px-4 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
                             selected={startHour}
-                            onChange={(date) => setStartHour(date)}
+                            onChange={(date: Date) => setStartHour(date)}
                             showTimeSelect
                             showTimeSelectOnly
                             timeIntervals={15}
@@ -187,7 +187,7 @@ export default function SolutionById({ params: { id } }) {
                         <DatePicker
                             className="border-2 rounded-xl py-1 px-4 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
                             selected={endHour}
-                            onChange={(date) => setEndHour(date)}
+                            onChange={(date: Date) => setEndHour(date)}
                             showTimeSelect
                             showTimeSelectOnly
                             timeIntervals={15}

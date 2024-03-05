@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation'
 
 export default function CreateSolution() {
     const router = useRouter()
-    const [user] = useUserStore(state => [state.user])
+    const [user] = useUserStore((state: any) => [state.user])
 
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
@@ -109,11 +109,16 @@ export default function CreateSolution() {
 
 		if(countyId != -1) {
 			// We are using the countyId as the index in the array, so we need to subtract 1
-			return countyList[countyId - 1].cities.map((city, index) => {
-				return (
-					<option key={index} value={city.id}>{city.name}</option>
-				)
-			})
+            const selectedCounty = countyList[countyId - 1] as { id: number, name: string, cities: { id: number, name: string }[] }
+            if (selectedCounty && selectedCounty.cities) {
+                return selectedCounty.cities.map((city, index) => {
+                    return (
+                        <option key={index} value={city.id}>{city.name}</option>
+                    )
+                })
+            } else {
+                return null
+            }
 		} else {
 			return null
 		}
@@ -142,11 +147,16 @@ export default function CreateSolution() {
 
 		if(categoryId != -1) {
 			// We are using the categoryId as the index in the array, so we need to subtract 1
-			return categoryList[categoryId - 1].subcategories.map((subcategory, index) => {
-				return (
-					<option key={index} value={subcategory.id}>{subcategory.name}</option>
-				)
-			})
+            const selectedCategory = categoryList[categoryId - 1] as { id: number, name: string, subcategories: { id: number, name: string }[] }
+            if(selectedCategory && selectedCategory.subcategories) {
+                return selectedCategory.subcategories.map((subcategory, index) => {
+                    return (
+                        <option key={index} value={subcategory.id}>{subcategory.name}</option>
+                    )
+                })
+            } else {
+                return null
+            }
 		} else {
 			return null
 		}
@@ -217,17 +227,16 @@ export default function CreateSolution() {
                         </div>
                         <div className="flex flex-col mb-10">
                             <label className="font-medium text-md">Description</label>
-                            <textarea type="text" className="border-2 rounded-xl py-1 px-4 hover:bg-gray-50 hover:shadow-sm transition duration-100 ease-in-out" vlaue={description} onChange={(event) => setDescription(event.target.value)}/>
+                            <textarea className="border-2 rounded-xl py-1 px-4 hover:bg-gray-50 hover:shadow-sm transition duration-100 ease-in-out" value={description} onChange={(event) => setDescription(event.target.value)}/>
                         </div>
                         <div className="flex justify-center mb-10">
                             <div className="border-r-2 pr-10 mr-10 start flex-1">
                                 <div className="flex flex-col mb-4">
                                     <label className="font-medium text-md">Type</label>
                                     <select
-                                        type="text"
                                         className="border-2 rounded-xl py-1 px-4 w-40 max-w-40 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
                                         value={type}
-                                        onChange={(event) => setType(event.target.value)}
+                                        onChange={(event: any) => setType(event.target.value)}
                                     >
                                         <option value="COST">Cost</option>
                                         <option value="CHECK">Verification</option>
@@ -239,7 +248,7 @@ export default function CreateSolution() {
                                     <DatePicker
                                         className="border-2 rounded-xl py-1 px-4 w-40 max-w-40 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
                                         selected={startHour}
-                                        onChange={(date) => setStartHour(date)}
+                                        onChange={(date: Date) => setStartHour(date)}
                                         showTimeSelect
                                         showTimeSelectOnly
                                         timeIntervals={15}
@@ -252,7 +261,7 @@ export default function CreateSolution() {
                                     <DatePicker
                                         className="border-2 rounded-xl py-1 px-4 w-40 max-w-40 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
                                         selected={endHour}
-                                        onChange={(date) => setEndHour(date)}
+                                        onChange={(date: Date) => setEndHour(date)}
                                         showTimeSelect
                                         showTimeSelectOnly
                                         timeIntervals={15}
@@ -265,10 +274,9 @@ export default function CreateSolution() {
                                 <div className="flex flex-col mb-4">
                                     <label className="font-medium text-md">County</label>
                                     <select
-                                        type="text"
                                         className="border-2 rounded-xl py-1 px-4 w-60 max-w-60 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
                                         value={countyId}
-                                        onChange={(event) => {
+                                        onChange={(event: any) => {
                                             setCountyId(event.target.value)
                                             setCityId(-1)
                                         }}
@@ -280,10 +288,9 @@ export default function CreateSolution() {
                                 <div className="flex flex-col mb-4">
                                     <label className="font-medium text-md">City</label>
                                     <select
-                                        type="text"
                                         className="border-2 rounded-xl py-1 px-4 w-60 max-w-60 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
                                         value={cityId}
-                                        onChange={(event) => setCityId(event.target.value)}
+                                        onChange={(event: any) => setCityId(event.target.value)}
                                     >
                                         <option value={-1} selected>Choose a city</option>
                                         {(countyList.length > 0) && displayCityList()}
@@ -292,10 +299,9 @@ export default function CreateSolution() {
                                 <div className="flex flex-col mb-4">
                                     <label className="font-medium text-md">Category</label>
                                     <select
-                                        type="text" 
                                         className="border-2 rounded-xl py-1 px-4 w-60 max-w-60 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
                                         value={categoryId}
-                                        onChange={(event) => {
+                                        onChange={(event: any) => {
                                             setCategoryId(event.target.value)
                                             setSubcategoryId(-1)
                                         }}
@@ -307,10 +313,9 @@ export default function CreateSolution() {
                                 <div className="flex flex-col mb-4">
                                     <label className="font-medium text-md">Subcategory</label>
                                     <select
-                                        type="text"
                                         className="border-2 rounded-xl py-1 px-4 w-60 max-w-60 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
                                         value={subcategoryId}
-                                        onChange={(event) => setSubcategoryId(event.target.value)}
+                                        onChange={(event: any) => setSubcategoryId(event.target.value)}
                                     >
                                         <option value={-1} selected>Choose a subcategory</option>
                                         {(categoryList.length > 0) && displaySubcategoryList()}

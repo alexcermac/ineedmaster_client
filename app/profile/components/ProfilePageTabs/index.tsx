@@ -1,7 +1,7 @@
 import { useUserStore } from "@/stores/userStore"
 
-export default function ProfilePageTabs({ activeTab, setActiveTab }) {
-    const [user] = useUserStore(state => [state.user])
+export default function ProfilePageTabs({ activeTab, setActiveTab }: { activeTab: string, setActiveTab: (tab: string) => void }) {
+    const [user] = useUserStore((state: any) => [state.user])
 
     return (
         <div className="w-full border-b-2 border-b-gray-200">

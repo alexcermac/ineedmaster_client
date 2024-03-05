@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 
-export default function ButtonErrorOutline({ text, linkTo, handleOnClick }: { text: string, linkTo:string }) {
+export default function ButtonErrorOutline({ text, linkTo, handleOnClick }: { text: string, linkTo?: string, handleOnClick?: any }) {
     if(!linkTo) {
         return (
             <button

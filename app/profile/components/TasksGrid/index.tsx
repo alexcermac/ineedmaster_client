@@ -5,8 +5,8 @@ import { useUserStore } from "@/stores/userStore"
 import Modal from "@/components/Modal"
 import TaskCardForMaster from "../TaskCardForMaster"
 
-export default function TasksGrid({ typeOfTasks }) {
-    const [user] = useUserStore(state => [state.user])
+export default function TasksGrid({ typeOfTasks }: { typeOfTasks: string }) {
+    const [user] = useUserStore((state: any) => [state.user])
 
     const [tasks, setTasks] = useState<Task[]>([])
     const [typeOfTaskByDate, setTypeOfTaskByDate] = useState("")

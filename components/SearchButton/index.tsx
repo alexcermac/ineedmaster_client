@@ -16,7 +16,6 @@ export default function SearchButton({ countyId, cityId, categoryId, subcategory
         let urlParams = ""
         
         if(countyId != -1) {
-            // urlParams += `/county/${countyId}`
             urlParams += `county=${countyId}`
         } 
         if (cityId != -1) {
@@ -29,7 +28,6 @@ export default function SearchButton({ countyId, cityId, categoryId, subcategory
             urlParams += `&subcategory=${subcategoryId}`
         }
 
-        // router.push(`/search?urlParams=${urlParams}`)
         router.push(`/search?${urlParams}`)
     }
 

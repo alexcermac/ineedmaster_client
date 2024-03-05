@@ -11,7 +11,7 @@ import ServicesGrid from './components/ServicesGrid'
 
 export default function Profile() {
     const router = useRouter()
-    const [user, getUser, userLoading, userError] = useUserStore(state => [state.user, state.getUser, state.userLoading, state.userError])
+    const [user, getUser, userLoading, userError] = useUserStore((state: any) => [state.user, state.getUser, state.userLoading, state.userError])
 
     const [activeTab, setActiveTab] = useState("futureTasks")
     const [displayModal, setDisplayModal] = useState(false)

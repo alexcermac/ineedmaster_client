@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation"
 
 export default function SignOutButton() {
     const router = useRouter()
-    const [logout] = useUserStore(state => [state.logout])
+    const [logout] = useUserStore((state: any) => [state.logout])
 
     const handleSignout = () => {
         logout()
