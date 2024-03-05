@@ -58,7 +58,7 @@ export default function Home() {
 		return (
 			<div className="grid grid-cols-4 gap-8">
 				{last10Solutions.map((solution, index) => {
-					return <SolutionCard index={index} solution={solution} />
+					return <SolutionCard key={index} solution={solution} />
 				})}
 			</div>
 		)
