@@ -12,11 +12,11 @@ export default function Login() {
     const [password, setPassword] = useState("")
     const [formError, setFormError] = useState("")
 
-    // useEffect(() => {
-    //     if(user) {
-    //         router.push("/profile")
-    //     }
-    // }, [user])
+    useEffect(() => {
+        if(user) {
+            router.push("/profile")
+        }
+    }, [user])
 
     const handleSubmit = async (event: any) => {
         event.preventDefault()
@@ -47,14 +47,6 @@ export default function Login() {
 
     const handleModalClose = () => {
         setFormError("")
-    }
-
-    if(userLoading) {
-        return <div>Loading...</div>
-    }
-
-    if(user) {
-        router.push("/profile")
     }
 
     return (

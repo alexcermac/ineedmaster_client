@@ -1,16 +1,19 @@
 import { useUserStore } from "@/stores/userStore"
 import { useRouter } from "next/navigation"
+import { useEffect } from "react"
 
 export default function ProtectedRoute({ children }: { children: React.ReactNode }) {
     const router = useRouter()
     const [user, userLoading] = useUserStore((state: any) => [state.user, state.userLoading])
 
-    if(userLoading)
-        return <div>Loading...</div>
+    useEffect(() => {
+        if(!user) {
+            router.push("/login")
+        }
+    }, [])
 
-    if(!user) {
-        router.push("/login")
-    }
+    if(userLoading)
+            return <div>Loading...</div>
 
     return <>{children}</>
 }
