@@ -9,10 +9,9 @@ export default function ProtectedRouteMaster({ children }: { children: React.Rea
     useEffect(() => {
         if(!user) {
             router.push("/login")
-            // return null
         }
 
-        if(user && user?.role !== "MASTER") {
+        if(user && user?.role !== "ROLE_MASTER") {
             router.push("/")
         }
     }, [])
@@ -20,14 +19,5 @@ export default function ProtectedRouteMaster({ children }: { children: React.Rea
     if(userLoading)
         return <div>Loading...</div>
     
-
-    // if(user && user?.role === "MASTER") {
-        return <>{children}</>
-    // }
-    // if(user && user?.role === "MASTER") {
-    //     return <>{children}</>
-    // } else {
-    //     router.push("/")
-    //     return null
-    // }
+    return <>{children}</>
 }
