@@ -10,6 +10,7 @@ import Modal from '@/components/Modal'
 import { useUserStore } from '@/stores/userStore'
 import ModalSuccess from '@/components/ModalSuccess'
 import { useRouter } from 'next/navigation'
+import ProtectedRouteMaster from '@/components/ProtectedRouteMaster'
 
 export default function CreateSolution() {
     const router = useRouter()
@@ -214,6 +215,7 @@ export default function CreateSolution() {
     }
 
     return (
+        <ProtectedRouteMaster>
         <div>
             {submitErrorMessage && <Modal message={submitErrorMessage} handleModalClose={() => setSubmitErrorMessage("")} />}
             {displaySuccessModal && <ModalSuccess message="Solution created successfully" handleModalClose={() => router.push("/profile")} />}
@@ -333,5 +335,6 @@ export default function CreateSolution() {
                 </div>
             </div>
         </div>
+        </ProtectedRouteMaster>
     )
 }

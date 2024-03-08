@@ -1,10 +1,12 @@
 "use client"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { useUserStore } from "@/stores/userStore"
 
 export default function RegisterCustomer() {
     const router = useRouter()
+    const [user] = useUserStore((state: any) => [state.user])
 
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
@@ -14,6 +16,12 @@ export default function RegisterCustomer() {
     const [phoneNumber, setPhoneNumber] = useState("")
     const role = "ROLE_MASTER"
     const [formError, setFormError] = useState("")
+
+    useEffect(() => {
+        if(user) {
+            router.push("/profile")
+        }
+    }, [user])
 
     const handleSubmit = (event: any) => {
         event.preventDefault()

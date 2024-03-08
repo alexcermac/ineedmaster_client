@@ -8,6 +8,7 @@ import Modal from '@/components/Modal'
 import ProfilePageTabs from './components/ProfilePageTabs'
 import TasksGrid from './components/TasksGrid'
 import ServicesGrid from './components/ServicesGrid'
+import ProtectedRoute from '@/components/ProtectedRoute'
 
 export default function Profile() {
     const router = useRouter()
@@ -46,15 +47,8 @@ export default function Profile() {
         )
     }
 
-    if(!user) {
-        return (
-            <div>
-                <p>Loading user informations...</p>
-            </div>
-        )
-    }
-
     return (
+        <ProtectedRoute>
         <div>
             {displayModal && <Modal message={userError} handleModalClose={() => setDisplayModal(false)} />}
             {/* TODO: handle display by role */}
@@ -64,15 +58,15 @@ export default function Profile() {
                     <div className="flex flex-col">
                         <div className="flex">
                             <p className="mr-2 font-semibold">Name:</p>
-                            <p>{user && user.firstName} {user && user.lastName}</p>
+                            <p>{user?.firstName} {user?.lastName}</p>
                         </div>
                         <div className="flex">
                             <p className="mr-2 font-semibold">Email:</p>
-                            <p>{user && user.email}</p>
+                            <p>{user?.email}</p>
                         </div>
-                        {user && user.phoneNumber && <div className="flex mb-4">
+                        {user && user?.phoneNumber && <div className="flex mb-4">
                             <p className="mr-2 font-semibold">Phone number:</p>
-                            <p>{user && user.phoneNumber}</p>
+                            <p>{user?.phoneNumber}</p>
                         </div>}
                         <div>
                             <SignOutButton />
@@ -83,5 +77,6 @@ export default function Profile() {
             <ProfilePageTabs activeTab={activeTab} setActiveTab={setActiveTab} />
             {displayContentOfSelectedTab()}
         </div>
+        </ProtectedRoute>
     )
 }

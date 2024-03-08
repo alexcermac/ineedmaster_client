@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation'
 import ButtonErrorOutline from '@/components/ButtonErrorOutline'
 import { convertDateToHourMinutesString, convertStringHourMinutesToDate } from '@/app/common/utils'
 import { Solution } from '@/app/common/types'
+import ProtectedRouteMaster from '@/components/ProtectedRouteMaster'
 
 export default function EditSolution({ params: { id } }: { params: { id: string } }) {
     const router = useRouter()
@@ -211,10 +212,6 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
             return
         }
 
-        console.log("New solution: ", newSolution);
-        
-        
-
         const response = await fetch(`${process.env.NEXT_PUBLIC_URL_PREFIX}/api/solutions/${id}`, {
             method: 'PUT',
             headers: {
@@ -238,6 +235,7 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
     }
 
     return (
+        <ProtectedRouteMaster>
         <div>
             {submitErrorMessage && <Modal message={submitErrorMessage} handleModalClose={() => setSubmitErrorMessage("")} />}
             {displaySuccessModal && <ModalSuccess message="Solution updated successfully" handleModalClose={() => router.push("/profile")} />}
@@ -366,5 +364,6 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
                 </div>
             </div>
         </div>
+        </ProtectedRouteMaster>
     )
 }

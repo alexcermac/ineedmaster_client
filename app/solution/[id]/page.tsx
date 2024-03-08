@@ -150,8 +150,8 @@ export default function SolutionById({ params: { id } }: { params: { id: Number 
                     </div>
                 </div>
                 {/* <div className={`border-2 border-gray-300 px-10 py-8 rounded-2xl ${user.role === "ROLE_MASTER" ? "pointer-events-none bg-gray-300" : ""}`}> */}
-                <div className={`border-2 border-gray-300 px-10 py-8 rounded-2xl ${user.role === "ROLE_MASTER" ? "pointer-events-none relative" : ""}`}>
-                    {user.role === "ROLE_MASTER" && <div className="absolute top-0 bottom-0 left-0 right-0 z-50 rounded-2xl bg-gray-700 opacity-50"></div>}
+                <div className={`border-2 border-gray-300 px-10 py-8 rounded-2xl ${user?.role === "ROLE_MASTER" ? "pointer-events-none relative" : ""}`}>
+                    {user?.role === "ROLE_MASTER" && <div className="absolute top-0 bottom-0 left-0 right-0 z-50 rounded-2xl bg-gray-700 opacity-50"></div>}
                     <div className="flex flex-col mb-4">
                         <label className="font-medium text-sm" htmlFor="address">Enter address</label>
                         <input

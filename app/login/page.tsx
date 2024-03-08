@@ -1,16 +1,22 @@
 'use client'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import Modal from "@/components/Modal"
 import { useUserStore } from "@/stores/userStore"
 
 export default function Login() {
     const router = useRouter()
-    const [user, getUser] = useUserStore((state: any) => [state.user, state.getUser])
+    const [user, userLoading, getUser] = useUserStore((state: any) => [state.user, state.userLoading, state.getUser])
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [formError, setFormError] = useState("")
+
+    // useEffect(() => {
+    //     if(user) {
+    //         router.push("/profile")
+    //     }
+    // }, [user])
 
     const handleSubmit = async (event: any) => {
         event.preventDefault()
@@ -41,6 +47,14 @@ export default function Login() {
 
     const handleModalClose = () => {
         setFormError("")
+    }
+
+    if(userLoading) {
+        return <div>Loading...</div>
+    }
+
+    if(user) {
+        router.push("/profile")
     }
 
     return (

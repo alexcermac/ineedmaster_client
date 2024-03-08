@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import MainButton from '@/components/MainButton'
 import { useUserStore } from '@/stores/userStore'
 import { limitTextSize } from '@/app/common/utils'
+import { Solution } from '@/app/common/types'
 
 export default function ServicesGrid() {
     const [user] = useUserStore((state: any) => [state.user])
@@ -36,9 +37,9 @@ export default function ServicesGrid() {
 
         return (
             <div className="">
-                {services.map((service: any, index: number) => {
+                {services.map((service: Solution, index: number) => {
                     return (
-                        <div key={index} className="flex border p-4 rounded-lg mb-8 flex justify-between items-center">
+                        <div key={index} className="flex border p-4 rounded-lg mb-8 justify-between items-center">
                             <div className="flex justify-between flex-1 mr-20">
                                 <div className="flex-1 mr-8">
                                     <h3 className="font-semibold text-md">{service?.title}</h3>
