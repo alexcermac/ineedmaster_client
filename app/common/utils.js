@@ -18,3 +18,20 @@ export function convertDateToHourMinutesString(hourMinutesAsDate) {
 
 	return hours + ":" + minutes
 }
+
+export function checkStringIsNumber(text) {
+    var floatPattern = /^[+-]?(?:\d*\.)?\d+(?:[eE][+-]?\d+)?$/
+    return floatPattern.test(text)
+}
+
+export function convertStringToNumber(text) {
+    text = text.trim(); // remove leading and trailing whitespaces
+
+    // remove leading zeros
+    while (text.startsWith('0')) {
+        text = text.substr(1)
+    }
+
+    var number = parseFloat(text)
+    return number
+}

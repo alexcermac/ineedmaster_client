@@ -8,7 +8,7 @@ import { useUserStore } from '@/stores/userStore'
 import ModalSuccess from '@/components/ModalSuccess'
 import { useRouter } from 'next/navigation'
 import ButtonErrorOutline from '@/components/ButtonErrorOutline'
-import { convertDateToHourMinutesString, convertStringHourMinutesToDate } from '@/app/common/utils'
+import { checkStringIsNumber, convertDateToHourMinutesString, convertStringHourMinutesToDate } from '@/app/common/utils'
 import { Solution } from '@/app/common/types'
 import ProtectedRouteMaster from '@/components/ProtectedRouteMaster'
 
@@ -212,6 +212,17 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
             return
         }
 
+        if(solution.price === "" && solution.type === "COST") {
+            setSubmitErrorMessage("Please enter a price value.")
+            return
+        }
+        
+        const isStringNumber = checkStringIsNumber(solution.price)
+        if(!isStringNumber && solution.type === "COST") {
+            setSubmitErrorMessage("Price must be a number.")
+            return
+        }
+
         const response = await fetch(`${process.env.NEXT_PUBLIC_URL_PREFIX}/api/solutions/${id}`, {
             method: 'PUT',
             headers: {
@@ -270,7 +281,12 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
                                         <option value="COST">Cost</option>
                                         <option value="CHECK">Verification</option>
                                     </select>
-                                    {/* If type is COST, display price input */ }
+                                    {solution?.type === "COST" && <div className="flex flex-col mb-6">
+                                    <label className="font-medium text-md">Price</label>
+                                    <input type="number" className="border-2 rounded-xl py-1 px-4 w-40 max-w-40 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" placeholder='0' value={solution?.price} onChange={(event: any) => setSolution({
+                                        ...solution,
+                                        price: solution?.type === "COST" ? event.target.value : 0 })}/>
+                                </div>}
                                 </div>
                                 <div className="mb-4">
                                     <p className="font-medium text-md">Start hour</p>
@@ -305,11 +321,7 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
                                     <select
                                         className="border-2 rounded-xl py-1 px-4 w-60 max-w-60 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
                                         value={solution?.countyId}
-                                        onChange={(event) => {
-                                            // setCountyId(event.target.value)
-                                            // setCityId(-1)
-                                            setSolution({ ...solution, countyId: Number(event.target.value), cityId: -1})
-                                        }}
+                                        onChange={(event) => setSolution({ ...solution, countyId: Number(event.target.value), cityId: -1})}
                                     >
                                         <option value={-1} selected>Choose a county</option>
                                         {countyList && displayCountyList()}
@@ -320,7 +332,6 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
                                     <select
                                         className="border-2 rounded-xl py-1 px-4 w-60 max-w-60 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
                                         value={solution?.cityId}
-                                        // onChange={(event) => setCityId(event.target.value)}
                                         onChange={(event) => setSolution({ ...solution, cityId: Number(event.target.value) })}
                                     >
                                         <option value={-1} selected>Choose a city</option>
@@ -332,11 +343,7 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
                                     <select
                                         className="border-2 rounded-xl py-1 px-4 w-60 max-w-60 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
                                         value={solution?.categoryId}
-                                        onChange={(event) => {
-                                            // setCategoryId(event.target.value)
-                                            // setSubcategoryId(-1)
-                                            setSolution({ ...solution, categoryId: Number(event.target.value), subcategoryId: -1 })
-                                        }}
+                                        onChange={(event) => setSolution({ ...solution, categoryId: Number(event.target.value), subcategoryId: -1 })}
                                     >
                                         <option value={-1} selected>Choose a category</option>
                                         {solution && categoryList && displayCategoryList()}
@@ -347,7 +354,6 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
                                     <select
                                         className="border-2 rounded-xl py-1 px-4 w-60 max-w-60 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out"
                                         value={solution?.subcategoryId}
-                                        // onChange={(event) => setSubcategoryId(event.target.value)}
                                         onChange={(event) => setSolution({ ...solution, subcategoryId: Number(event.target.value) })}
                                     >
                                         <option value={-1} selected>Choose a subcategory</option>

@@ -11,6 +11,7 @@ import { useUserStore } from '@/stores/userStore'
 import ModalSuccess from '@/components/ModalSuccess'
 import { useRouter } from 'next/navigation'
 import ProtectedRouteMaster from '@/components/ProtectedRouteMaster'
+import { checkStringIsNumber, convertStringToNumber } from '@/app/common/utils'
 
 export default function CreateSolution() {
     const router = useRouter()
@@ -19,6 +20,7 @@ export default function CreateSolution() {
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [type, setType] = useState("COST")
+    const [price, setPrice] = useState("")
     const [startHour, setStartHour] = useState(new Date())
     const [endHour, setEndHour] = useState(new Date())
     const [countyList, setCountyList] = useState([])
@@ -164,21 +166,15 @@ export default function CreateSolution() {
 	}
 
     const handleSubmit = async () => {
-        const newSolution = {
-            userId: user.id,
-            title: title,
-            description: description,
-            type: type,
-            price: 0,
-            countyId: countyId,
-            cityId: cityId,
-            categoryId: categoryId,
-            subcategoryId: subcategoryId,
-            startHour: startHour.getHours() + ":" + (startHour.getMinutes() === 0 ? "00" : startHour.getMinutes()), // If minutes are 0, add 00 to the end of the string,
-            endHour: endHour.getHours() + ":" + (endHour.getMinutes() === 0 ? "00" : endHour.getMinutes())
+        if(title === "") {
+            setSubmitErrorMessage("Please enter a title.")
+            return
         }
 
-        console.log("New solution: ", newSolution);
+        if(description === "") {
+            setSubmitErrorMessage("Please enter a description.")
+            return
+        }
 
         if(countyId === -1) {
             setSubmitErrorMessage("Please select a county.")
@@ -196,7 +192,31 @@ export default function CreateSolution() {
             setSubmitErrorMessage("Please select a subcategory.")
             return
         }
+
+        if(price === "" && type === "COST") {
+            setSubmitErrorMessage("Please enter a price value.")
+            return
+        }
         
+        const isStringNumber = checkStringIsNumber(price)
+        if(!isStringNumber && type === "COST") {
+            setSubmitErrorMessage("Price must be a number.")
+            return
+        }
+
+        const newSolution = {
+            userId: user.id,
+            title: title,
+            description: description,
+            type: type,
+            price: type === "COST" ? convertStringToNumber(price) : 0,
+            countyId: countyId,
+            cityId: cityId,
+            categoryId: categoryId,
+            subcategoryId: subcategoryId,
+            startHour: startHour.getHours() + ":" + (startHour.getMinutes() === 0 ? "00" : startHour.getMinutes()), // If minutes are 0, add 00 to the end of the string,
+            endHour: endHour.getHours() + ":" + (endHour.getMinutes() === 0 ? "00" : endHour.getMinutes())
+        }
 
         const response = await fetch(`${process.env.NEXT_PUBLIC_URL_PREFIX}/api/solutions`, {
             method: 'POST',
@@ -243,8 +263,11 @@ export default function CreateSolution() {
                                         <option value="COST">Cost</option>
                                         <option value="CHECK">Verification</option>
                                     </select>
-                                    {/* If type is COST, display price input */ }
                                 </div>
+                                {type === "COST" && <div className="flex flex-col mb-6">
+                                    <label className="font-medium text-md">Price</label>
+                                    <input type="number" className="border-2 rounded-xl py-1 px-4 w-40 max-w-40 hover:bg-gray-50 hover:shadow-sm hover:cursor-pointer transition duration-150 ease-in-out [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" placeholder='0' value={price} onChange={(event: any) => setPrice(event.target.value)}/>
+                                </div>}
                                 <div className="mb-4">
                                     <p className="font-medium text-md">Start hour</p>
                                     <DatePicker
