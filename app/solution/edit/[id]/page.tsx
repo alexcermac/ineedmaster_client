@@ -180,6 +180,23 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
 		}
 	}
 
+    const handleDeleteSolution = async () => {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_URL_PREFIX}/api/solutions/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
+
+        if(response.ok) {
+            console.log("Service was deleted successfully");
+            router.push("/profile")
+        } else {
+            console.log("Failed to delete solution")
+        }
+    }
+
     const handleSaveSubmit = async () => {
         const newSolution = {
             userId: solution.userId,
@@ -363,7 +380,7 @@ export default function EditSolution({ params: { id } }: { params: { id: string 
                             </div>
                         </div>
                         <div className="flex justify-around">
-                            <ButtonErrorOutline text="Delete service" linkTo="/profile" />
+                            <ButtonErrorOutline text="Delete service" handleOnClick={handleDeleteSolution} />
                             <MainButton text="Save changes" handleOnClick={handleSaveSubmit}/>
                         </div>
                     </div>

@@ -1,8 +1,36 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# iNeedMaster
 
-## Getting Started
+Contact <br/>
+Email: alexandrucermac@gmail.com <br/>
+Phone number: 0743939803
 
-First, run the development server:
+Mention: The back end is implemented using Spring Boot and is stored in another GitHub repository. **[Click here to open repository](https://github.com/alexcermac/ineedmaster)**
+
+### Table of contents
+
+1. [Description](#description)
+2. [Technologies](#technologies)
+3. [Installation](#installation)
+4. [Usage](#usage)
+5. [Future updates, problems, things that need to be fixed](#future-updates-problems-things-that-need-to-be-fixed)
+
+## <a name="description"></a> Description
+
+This project it is a platform whose main purpose is to connect clients who need certain services with masters who offer services such as plumber, electrician, builder, and so on. The platform provides authentication functionality and allows users to create accounts with the role of client or master. Customers can search for services available in a specific city according to certain filters such as categories and subcategories of services, and they can make a reservation for these services if they are registered and authenticated on the platform. Masters can create new services that they offer, and accept or refuse reservations (Tasks) made by customers.
+
+## <a name="technologies"></a> Technologies
+
+-   React (with Next.js)
+-   Tailwind CSS
+-   Typescript
+-   Zustand
+
+## <a name="installation"></a> Installation
+
+First you have to run the backend server from [this repository](https://github.com/alexcermac/ineedmaster) to be able to make requests from this project.
+Make sure that you have in .env file this variable with this value: NEXT_PUBLIC_URL_PREFIX="http://localhost:8080"
+
+After the server is started, run the development server of this project:
 
 ```bash
 npm run dev
@@ -16,21 +44,8 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## <a name="usage"></a> Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## <a name=""></a> Future updates, problems, things that need to be fixed
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+-   For Solution Cards component display either an icon that represents the category of the current solution or an image that master uploaded.
