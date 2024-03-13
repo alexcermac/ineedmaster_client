@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 import { Solution } from '@/app/common/types'
 import SolutionCard from "@/components/SolutionCard";
 import SearchFilter from "@/components/SearchFilter";
+import { useSearchParams } from 'next/navigation'
 
 const URL_BASE = `${process.env.NEXT_PUBLIC_URL_PREFIX}/api/solutions`
 
-export default function Search({ searchParams }: { searchParams: URLSearchParams }) {
-    const urlParams = new URLSearchParams(searchParams)
-
-    console.log("URL params", urlParams);
-    
+// export default function Search({ searchParams }: { searchParams: URLSearchParams }) {
+export default function Search() {
+    // const urlParams = new URLSearchParams(searchParams)
+    const searchParams = useSearchParams()
 
     const [solutions, setSolutions] = useState([])
     const [countyId, setCountyId] = useState(-1)
@@ -21,7 +21,8 @@ export default function Search({ searchParams }: { searchParams: URLSearchParams
     useEffect(() => {
         // const urlParams = URL_BASE + searchParams.urlParams
 
-        const urlForApiCall = buildUrlForApiCall(urlParams)
+        // const urlForApiCall = buildUrlForApiCall(urlParams)
+        const urlForApiCall = buildUrlForApiCall()
         console.log("URL for API call", urlForApiCall)
 
         setFiltersFromUrl()
@@ -43,14 +44,19 @@ export default function Search({ searchParams }: { searchParams: URLSearchParams
     }, [searchParams])
 
     const setFiltersFromUrl = () => {
-		if(urlParams.get('county') === null) {
+		// if(urlParams.get('county') === null) {
+		if(searchParams.get('county') === null) {
 			return
 		}
 
-		const countyId = urlParams.get('county')
-		const cityId = urlParams.get('city')
-		const categoryId = urlParams.get('category')
-		const subcategoryId = urlParams.get('subcategory')
+		// const countyId = urlParams.get('county')
+		const countyId = searchParams.get('county')
+		// const cityId = urlParams.get('city')
+		const cityId = searchParams.get('city')
+		// const categoryId = urlParams.get('category')
+		const categoryId = searchParams.get('category')
+		// const subcategoryId = urlParams.get('subcategory')
+		const subcategoryId = searchParams.get('subcategory')
 
 		if(countyId) {
 			setCountyId(parseInt(countyId))
@@ -66,20 +72,21 @@ export default function Search({ searchParams }: { searchParams: URLSearchParams
 		}
 	}
 
-    const buildUrlForApiCall = (urlParams: URLSearchParams) => {
+    // const buildUrlForApiCall = (urlParams: URLSearchParams) => {
+    const buildUrlForApiCall = () => {
         let url = URL_BASE
 
-        if (urlParams.get('county')) {
-            url += `/county/${urlParams.get('county')}`
+        if (searchParams.get('county')) {
+            url += `/county/${searchParams.get('county')}`
         }
-        if (urlParams.get('city')) {
-            url += `/city/${urlParams.get('city')}`
+        if (searchParams.get('city')) {
+            url += `/city/${searchParams.get('city')}`
         }
-        if (urlParams.get('category')) {
-            url += `/category/${urlParams.get('category')}`
+        if (searchParams.get('category')) {
+            url += `/category/${searchParams.get('category')}`
         }
-        if (urlParams.get('subcategory')) {
-            url += `/subcategory/${urlParams.get('subcategory')}`
+        if (searchParams.get('subcategory')) {
+            url += `/subcategory/${searchParams.get('subcategory')}`
         }
 
         return url
