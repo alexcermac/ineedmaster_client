@@ -9,6 +9,9 @@ const URL_BASE = `${process.env.NEXT_PUBLIC_URL_PREFIX}/api/solutions`
 export default function Search({ searchParams }: { searchParams: URLSearchParams }) {
     const urlParams = new URLSearchParams(searchParams)
 
+    console.log("URL params", urlParams);
+    
+
     const [solutions, setSolutions] = useState([])
     const [countyId, setCountyId] = useState(-1)
     const [cityId, setCityId] = useState(-1)
