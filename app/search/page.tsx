@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Solution } from '@/app/common/types'
 import SolutionCard from "@/components/SolutionCard";
 import SearchFilter from "@/components/SearchFilter";
@@ -8,7 +8,7 @@ import { useSearchParams } from 'next/navigation'
 const URL_BASE = `${process.env.NEXT_PUBLIC_URL_PREFIX}/api/solutions`
 
 // export default function Search({ searchParams }: { searchParams: URLSearchParams }) {
-export default function Search() {
+function SearchPage() {
     // const urlParams = new URLSearchParams(searchParams)
     const searchParams = useSearchParams()
 
@@ -122,5 +122,14 @@ export default function Search() {
 			</div>
             {displaySolutions()}
         </div>
+    )
+}
+
+
+export default function Search() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <SearchPage />
+        </Suspense>
     )
 }
