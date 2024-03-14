@@ -11,7 +11,7 @@ Mention: The back end is implemented using Spring Boot and is stored in another 
 1. [Description](#description)
 2. [Technologies](#technologies)
 3. [Installation](#installation)
-4. [Usage](#usage)
+4. [Usage/Flow diagrams](#usage/flow-diagrams)
 5. [Future updates, problems, things that need to be fixed](#future-updates-problems-things-that-need-to-be-fixed)
 
 ## <a name="description"></a> Description
@@ -44,7 +44,15 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## <a name="usage"></a> Usage
+## <a name="usage/flow-diagrams"></a> Usage/Flow diagrams
+
+Customer flow diagram
+
+![customer flow diagram](/readme_images/customer_flow_diagram.jpg?raw=true)
+
+Master flow diagram
+
+![master flow diagram](/readme_images/master_flow_diagram.jpg?raw=true)
 
 ## <a name=""></a> Future updates, problems, things that need to be fixed
 
