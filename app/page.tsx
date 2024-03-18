@@ -11,6 +11,7 @@ import Image from "next/image"
 import SearchFilter from "@/components/SearchFilter"
 import { useEffect, useState } from "react"
 import SolutionCard from "@/components/SolutionCard"
+import Modal from "@/components/Modal"
 
 export default function Home() {
 	const [countyId, setCountyId] = useState(-1)
@@ -27,22 +28,25 @@ export default function Home() {
 	}, [])
 
 	const fetchLast10Solutions = async () => {
-		const response = await fetch(`${process.env.NEXT_PUBLIC_URL_PREFIX}/api/solutions/last-10`, {
-			method: 'GET',
-			headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        
-        if (!response.ok) {
-            const data = await response.json()
-            setFetchSolutionsError(data.message ? data.message : "Error fetching last solutions.")
+		try {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_URL_PREFIX}/api/solutions/last-10`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			})
 
-        } else {
-            const data = await response.json()
-            setLast10Solutions(data)
-        }
-		setLast10SolutionsLoaded(true)
+			if (!response.ok) {
+				setFetchSolutionsError("Network response was not ok")
+				throw new Error('Network response was not ok')
+			}
+
+			const data = await response.json()
+			setLast10Solutions(data)
+			setLast10SolutionsLoaded(true)
+		} catch (error: any) {
+			setFetchSolutionsError(error.message);
+		}
 	}
 
 	const displayLast10Solutions = () => {
@@ -64,6 +68,9 @@ export default function Home() {
 
 	return (
 		<div className="">
+			{fetchSolutionsError && <Modal message="At the moment there are some problems with the backend. I am working on fixing them, until then the website will have a functional front end without being populated with data. Thank you for your understanding." 
+				handleModalClose={() => setFetchSolutionsError("")}
+				/>}
 			<div className="mx-auto max-w-6xl flex justify-between items-center text-center lg:flex-auto lg:py-24 lg:text-left">
 				<div>
 					<div className="mb-8">
