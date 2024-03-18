@@ -12,7 +12,8 @@ Mention: The back end is implemented using Spring Boot and is stored in another 
 2. [Technologies](#technologies)
 3. [Installation](#installation)
 4. [Usage/Flow diagrams](#usage/flow-diagrams)
-5. [Future updates, problems, things that need to be fixed](#future-updates-problems-things-that-need-to-be-fixed)
+5. [Demo accounts](#demo-accounts)
+6. [Future updates, problems, things that need to be fixed](#future-updates-problems-things-that-need-to-be-fixed)
 
 ## <a name="description"></a> Description
 
@@ -53,6 +54,20 @@ Customer flow diagram
 Master flow diagram
 
 ![master flow diagram](/readme_images/master_flow_diagram.jpg?raw=true)
+
+## <a name="demo-accounts"></a> Demo accounts
+
+With these demo accounts you can view some dummy data + play a little bit with the platform.
+
+### Master:
+
+email: demo_master@gmail.com <br>
+password: pass
+
+### Customer:
+
+email: demo_customer@gmail.com <br>
+password: pass
 
 ## <a name=""></a> Future updates, problems, things that need to be fixed
 
