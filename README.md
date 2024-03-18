@@ -4,6 +4,8 @@ Contact <br/>
 Email: alexandrucermac@gmail.com <br/>
 Phone number: 0743939803
 
+View live demo: <a href="https://ineedmaster.vercel.app">ineedmaster.vercel.app</a>
+
 Mention: The back end is implemented using Spring Boot and is stored in another GitHub repository. **[Click here to open repository](https://github.com/alexcermac/ineedmaster)**
 
 ### Table of contents
