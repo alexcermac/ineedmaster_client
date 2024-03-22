@@ -28,6 +28,7 @@ export default function SearchButton({ countyId, cityId, categoryId, subcategory
             urlParams += `&subcategory=${subcategoryId}`
         }
 
+
         router.push(`/search?${urlParams}`)
     }
 
